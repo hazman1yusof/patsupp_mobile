@@ -14,7 +14,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        //
+        return view('ticket');
     }
 
     /**
@@ -46,7 +46,7 @@ class TicketController extends Controller
      */
     public function show(ticket $ticket)
     {
-        //
+        return view('ticket_detail');
     }
 
     /**

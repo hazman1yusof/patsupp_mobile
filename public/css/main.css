@@ -1,0 +1,56 @@
+.sidemenu{
+    background-color: #284255 !important;
+}
+.sidemenu a{
+    padding: 25px !important;
+}
+.sidemenu a:hover {
+    background-color: #00B5AD !important;
+}
+.sidemenu a.active {
+    background: rgba(0,0,0, 0.5) !important;
+}
+.container {
+    padding-right:15px; 
+    padding-top:15px;
+    padding-bottom:15px;
+    padding-left: 95px;
+}
+.ui.sidebar.inverted.vertical.menu {
+    padding-top:90px;
+}
+@media (max-width: 768px) {
+    .ui.left.fixed.vertical.icon.menu {
+        display: none;
+    }
+    .container {
+        padding-left: 15px;
+        padding-top: 95px;
+    }
+}
+@media (min-width: 769px) {
+    .ui.fixed.top.menu{
+        display: none;
+    }
+    .container {
+    }
+}
+.avatar-circle {
+    width: 60px;
+    height: 60px;
+    background-color: azure;
+    text-align: center;
+    border-radius: 50%;
+    -webkit-border-radius: 20%;
+    -moz-border-radius: 20%;
+    border: solid thin #d4d4d5;
+}
+.initials {
+    position: relative;
+    top: 15px; /* 25% of parent */
+    font-size: 30px; /* 50% of parent */
+    line-height: 30px; /* 50% of parent */
+    color: #767676;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+}

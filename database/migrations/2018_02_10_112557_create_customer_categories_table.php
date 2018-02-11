@@ -15,6 +15,7 @@ class CreateCustomerCategoriesTable extends Migration
     {
         Schema::create('customer_categories', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

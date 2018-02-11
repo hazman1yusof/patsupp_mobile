@@ -12,5 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('ticket');
 });
+
+Route::get('/ticket', "TicketController@index");
+
+
+Route::get('/ticket/{id}', "TicketController@show");
+
