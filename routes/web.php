@@ -11,12 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('ticket');
-});
+Route::get('/', "TicketController@index");
+
+Route::get('/dashboard', "DashboardController@index");
 
 Route::get('/ticket', "TicketController@index");
 
-
 Route::get('/ticket/{id}', "TicketController@show");
 
+Route::get('/customer', "CustomerController@index");
+
+Route::get('/agent', "AgentController@index");
+
+Route::get('/settings', "DashboardController@index");

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ticket;
 use Illuminate\Http\Request;
+use DB;
 
 class TicketController extends Controller
 {
@@ -14,7 +15,15 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return view('ticket');
+        $customers = DB::table('customers')->get();
+        $agents = DB::table('agents')->get();
+
+        $tickets = DB::table('tickets')
+                    ->select('tickets.id','title','description','customers.username as report_by','agents.username as assign_to')
+                    ->join('agents', 'tickets.assign_to', '=', 'agents.id')
+                    ->join('customers', 'tickets.report_by', '=', 'customers.id')
+                    ->get();
+        return view('ticket',compact('tickets','customers','agents'));
     }
 
     /**
@@ -46,7 +55,10 @@ class TicketController extends Controller
      */
     public function show(ticket $ticket)
     {
-        return view('ticket_detail');
+        $customers = DB::table('customers')->get();
+        $agents = DB::table('agents')->get();
+        $tickets = DB::table('tickets')->get();
+        return view('ticket_detail',compact('tickets','customers','agents'));
     }
 
     /**
