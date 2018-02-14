@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Customer Support</title>
 
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/Semantic_latest/semantic.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
@@ -24,6 +24,7 @@
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/Semantic_latest/semantic.min.js') }}"></script>
+    <script src="{{ asset('js/utility.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('assets/Summernote 0.8.9/summernote-lite.js') }}"></script>
 

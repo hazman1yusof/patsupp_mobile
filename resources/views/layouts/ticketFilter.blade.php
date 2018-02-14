@@ -1,12 +1,12 @@
 <div class="ui teal segment" style="padding-bottom: 50px;">
 	<a class="ui teal top left attached label" id="toggleFilter">Toggle Filter Visibility</a>
-  	<form class="ui form" id="filterForm">
+  	<form method="GET" class="ui form" id="filterForm" action="/ticket" name="ticketSearch">
 		<h4 class="ui dividing header">Filter Ticket</h4>
 		<div class="field">
 			<div class="two fields">
 				<div class="field">
 					<label>Title</label>
-					<input type="text" name="title" placeholder="Title">
+					<input type="text" name="title" placeholder="Title" value="@if(!empty(Request::input('title'))){{Request::input('title')}}@endif">
 				</div>
 				<div class="field">
 					<label>Report By</label>
@@ -40,7 +40,7 @@
 				</div>
 				<div class="field">
 					<label>Created By</label>
-					<input type="text" name="created_by" placeholder="Created By">
+					<input type="text" name="created_by" placeholder="Created By" value="@if(!empty(Request::input('created_by'))){{Request::input('created_by')}}@endif">
 				</div>
 			</div>
 		</div>
@@ -90,6 +90,28 @@
 				</div>
 			</div>
 		</div>
+
+		<button class="ui grey button right floated" type="button" id="reset"> Reset </button>
 		<button class="ui teal button right floated"> Filter Ticket </button>
+
+		<label class="ui right floated sub header" style="padding-top: 10px"> Entries</label>
+
+		<div class="ui normal selection dropdown right floated" id="for_paginate">
+			<input type="hidden" name="paginate">
+			<i class="dropdown icon"></i>
+			<div class="text">
+				@if(!empty(Request::input('paginate'))){{Request::input('paginate')}}@else{{25}}@endif
+			</div>
+			<div class="menu">
+				<div class="item" data-value="20">20</div>
+				<div class="item" data-value="40">40</div>
+				<div class="item" data-value="80">80</div>
+				<div class="item" data-value="100">100</div>
+			</div>
+		</div>
+
+		<label class="ui right floated sub header" style="padding-top: 10px">Show </label>
+
+
   	</form>
 </div>

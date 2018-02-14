@@ -13,16 +13,62 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $customers = DB::table('customers')->get();
         $agents = DB::table('agents')->get();
 
-        $tickets = DB::table('tickets')
-                    ->select('tickets.id','title','description','customers.username as report_by','agents.username as assign_to')
-                    ->join('agents', 'tickets.assign_to', '=', 'agents.id')
-                    ->join('customers', 'tickets.report_by', '=', 'customers.id')
-                    ->get();
+        $tickets = new ticket;
+
+        if(!empty($request->title)){
+            $tickets = $tickets->where('title','like','%'.$request->title.'%');
+        }
+        if(!empty($request->report_by)){
+            $tickets = $tickets->Where(function($query) use ($request){
+                foreach (explode(",", $request->report_by) as $key => $value) {
+                    $query = $query->orWhere('report_by','like',$value);
+                }
+            });
+        }
+        if(!empty($request->assign_to)){
+            $tickets = $tickets->Where(function($query) use ($request){
+                foreach (explode(",", $request->assign_to) as $key => $value) {
+                    $query = $query->orWhere('assign_to','like',$value);
+                }
+            });
+        }
+        if(!empty($request->created_by)){
+            $tickets = $tickets->where('created_by','like','%'.$request->created_by.'%');
+        }
+        if(!empty($request->status)){
+            $tickets = $tickets->Where(function($query) use ($request){
+                foreach (explode(",", $request->status) as $key => $value) {
+                    $query = $query->orWhere('status','like',$value);
+                }
+            });
+        }
+        if(!empty($request->priority)){
+            $tickets = $tickets->Where(function($query) use ($request){
+                foreach (explode(",", $request->priority) as $key => $value) {
+                    $query = $query->orWhere('priority','like',$value);
+                }
+            });
+        }
+        if(!empty($request->category)){
+            $tickets = $tickets->Where(function($query) use ($request){
+                foreach (explode(",", $request->category) as $key => $value) {
+                    $query = $query->orWhere('category','like',$value);
+                }
+            });
+        }
+        if(!empty($request->paginate)){
+            $paginate = $request->paginate;
+        }else{
+            $paginate = 20;
+        }
+
+        $tickets = $tickets->paginate($paginate);
+
         return view('ticket',compact('tickets','customers','agents'));
     }
 
@@ -57,8 +103,8 @@ class TicketController extends Controller
     {
         $customers = DB::table('customers')->get();
         $agents = DB::table('agents')->get();
-        $tickets = DB::table('tickets')->get();
-        return view('ticket_detail',compact('tickets','customers','agents'));
+
+        return view('ticket_detail',compact('ticket','customers','agents'));
     }
 
     /**

@@ -17,7 +17,7 @@ Route::get('/dashboard', "DashboardController@index");
 
 Route::get('/ticket', "TicketController@index");
 
-Route::get('/ticket/{id}', "TicketController@show");
+Route::get('/ticket/{ticket}', "TicketController@show");
 
 Route::get('/customer', "CustomerController@index");
 

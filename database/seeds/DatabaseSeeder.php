@@ -23,7 +23,9 @@ class DatabaseSeeder extends Seeder
 
         factory(App\customer::class, 35)->create();
 
-        factory(App\ticket::class, 30)->create();
+        factory(App\ticket::class, 30)->create()->each(function ($ticket) {
+            $ticket->messages()->saveMany(factory(App\message::class,5)->make());
+        });
 
     }
 }
