@@ -4,147 +4,124 @@
 	<table id="example" class="ui celled table" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
+                <th>id</th>
+                <th>Username</th>
+                <th>Status</th>
+                <th>Type</th>
+                <th>Email</th>
+                <th>Company</th>
+                <th>Note</th>
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
-            </tr>
-        </tfoot>
         <tbody>
+            @foreach($customers as $customer)
             <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
+                <td>{{$customer->id}}</td>
+                <td>{{$customer->username}}</td>
+                <td>{{$customer->status}}</td>
+                <td>{{$customer->type}}</td>
+                <td>{{$customer->email}}</td>
+                <td>{{$customer->company}}</td>
+                <td>{{$customer->note}}</td>
             </tr>
-            <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>2011/07/25</td>
-                <td>$170,750</td>
-            </tr>
-            <tr>
-                <td>Ashton Cox</td>
-                <td>Junior Technical Author</td>
-                <td>San Francisco</td>
-                <td>66</td>
-                <td>2009/01/12</td>
-                <td>$86,000</td>
-            </tr>
-            <tr>
-                <td>Cedric Kelly</td>
-                <td>Senior Javascript Developer</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>2012/03/29</td>
-                <td>$433,060</td>
-            </tr>
-            <tr>
-                <td>Airi Satou</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>33</td>
-                <td>2008/11/28</td>
-                <td>$162,700</td>
-            </tr>
-            <tr>
-                <td>Brielle Williamson</td>
-                <td>Integration Specialist</td>
-                <td>New York</td>
-                <td>61</td>
-                <td>2012/12/02</td>
-                <td>$372,000</td>
-            </tr>
-            <tr>
-                <td>Herrod Chandler</td>
-                <td>Sales Assistant</td>
-                <td>San Francisco</td>
-                <td>59</td>
-                <td>2012/08/06</td>
-                <td>$137,500</td>
-            </tr>
-            <tr>
-                <td>Rhona Davidson</td>
-                <td>Integration Specialist</td>
-                <td>Tokyo</td>
-                <td>55</td>
-                <td>2010/10/14</td>
-                <td>$327,900</td>
-            </tr>
-            <tr>
-                <td>Colleen Hurst</td>
-                <td>Javascript Developer</td>
-                <td>San Francisco</td>
-                <td>39</td>
-                <td>2009/09/15</td>
-                <td>$205,500</td>
-            </tr>
-            <tr>
-                <td>Sonya Frost</td>
-                <td>Software Engineer</td>
-                <td>Edinburgh</td>
-                <td>23</td>
-                <td>2008/12/13</td>
-                <td>$103,600</td>
-            </tr>
-            <tr>
-                <td>Jena Gaines</td>
-                <td>Office Manager</td>
-                <td>London</td>
-                <td>30</td>
-                <td>2008/12/19</td>
-                <td>$90,560</td>
-            </tr>
-            <tr>
-                <td>Quinn Flynn</td>
-                <td>Support Lead</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>2013/03/03</td>
-                <td>$342,000</td>
-            </tr>
-            <tr>
-                <td>Charde Marshall</td>
-                <td>Regional Director</td>
-                <td>San Francisco</td>
-                <td>36</td>
-                <td>2008/10/16</td>
-                <td>$470,600</td>
-            </tr>
-            <tr>
-                <td>Haley Kennedy</td>
-                <td>Senior Marketing Designer</td>
-                <td>London</td>
-                <td>43</td>
-                <td>2012/12/18</td>
-                <td>$313,500</td>
-            </tr>
-            <tr>
-                <td>Tatyana Fitzpatrick</td>
-                <td>Regional Director</td>
-                <td>London</td>
-                <td>19</td>
-                <td>2010/03/17</td>
-                <td>$385,750</td>
-            </tr>
+            @endforeach
         </tbody>
 	</table>
+
+    <div class="segment" style="margin-top: 10px">
+        <button type="button" id="add" class="ui button">Add</button>
+        <button type="button" id="edit" class="ui button">Edit</button>
+        <button type="button" id="delete" class="ui button">Delete</button>
+    </div>
+
+    @if($errors->any())
+    <div class="segment">
+        <div class="ui error message">
+            <ul>
+            @foreach($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+            </ul>
+        </div>
+    </div>
+    @endif
+
+    <div class="ui modal" id="add_modal">
+        <div class="header">
+            Create New Customer
+        </div>
+        <div class="content">
+            <form class="ui form" method="POST" action="/customer" id="form">
+                {{csrf_field()}}
+                <div class="field">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Username">
+                </div>
+                <div class="field">
+                    <label>Password</label>
+                    <input type="text" name="password" placeholder="Password" data-content="By default password is the same as username, users are expected to change their password after login">
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input type="text" name="email" placeholder="Email">
+                </div>
+                <div class="field">
+                    <label>Company</label>
+                    <input type="text" name="company" placeholder="Company">
+                </div>
+                <div class="field">
+                    <label>Note</label>
+                    <textarea name="note" placeholder="Note"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui cancel button">Cancel</div>
+            <button class="ui button teal" form="form" >Save</button>
+        </div>
+    </div>
+
+    <div class="ui modal" id="edit_modal">
+        <div class="header">
+            Edit Customer
+        </div>
+        <div class="content">
+            <form class="ui form" method="POST" action="/customer/" id="form_edit">
+                <input type="hidden" name="_method" value="PUT">
+                {{csrf_field()}}
+                <div class="field">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Username" disabled>
+                </div>
+                <div class="field">
+                    <label>Password</label>
+                    <input type="text" name="password" placeholder="Password" data-content="Password are hash inside the database, old password cant be retrive, it can only be edit to a new one, leave password blank if you dont want to edit old password">
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input type="text" name="email" placeholder="Email">
+                </div>
+                <div class="field">
+                    <label>Company</label>
+                    <input type="text" name="company" placeholder="Company">
+                </div>
+                <div class="field">
+                    <label>Note</label>
+                    <textarea name="note" placeholder="Note"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui cancel button">Cancel</div>
+            <button class="ui button teal" form="form_edit" >Save</button>
+        </div>
+    </div>
+
+    <form method="POST" action="/customer/" id="form_delete" >
+        <input type="hidden" name="_method" value="DELETE">
+        {{csrf_field()}}
+    </form>
+
 @endsection
 
 @section('css')
@@ -153,6 +130,7 @@
 
 @section('js')
 	<script src="{{ asset('assets/DataTables/datatables.min.js') }}"></script>
+
 	<script src="{{ asset('js/customer.js') }}"></script>
 @endsection
 

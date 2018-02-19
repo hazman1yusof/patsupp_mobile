@@ -3,29 +3,70 @@
 @section('content')
 @include('layouts.ticketFilter')	
 
-	<h4 class="ui horizontal divider header">Ticket List</h4>
+	<a class="positive ui button" href="/ticket/create">Create New Ticket</a>
 
-	<div class="ui four stackable cards">
+	<h4 class="ui horizontal divider header">Ticket List</h4>
+	<div class="ui three link stackable cards">
 		@foreach ($tickets as $ticket)
-			<div class="card">
+			<?php
+
+				switch ($ticket->status) {
+					case 'Open':
+						$colorcard = 'red';
+						break;
+					case 'Answered':
+						$colorcard = 'red';
+						break;
+					case 'Resolved':
+						$colorcard = 'green';
+						break;
+					case 'Closed':
+						$colorcard = 'green';
+						break;
+					default:
+						$colorcard = 'black';
+						break;
+				}
+
+				switch ($ticket->priority) {
+					case 'Low':
+						$colorh4 = 'olive';
+						break;
+					case 'Medium':
+						$colorh4 = 'green';
+						break;
+					case 'High':
+						$colorh4 = 'orange';
+						break;
+					case 'Urgent':
+						$colorh4 = 'red';
+						break;
+					default:
+						$colorh4 = 'black';
+						break;
+				}
+
+			?>
+			<div class="card {{$colorh4}}" data-id="{{$ticket->id}}">
 				<div class="content">
 
-					@if($ticket->priority == 'Low')
-						{!!'<div class="ui olive right ribbon label">Low</div>'!!}
-					@elseif($ticket->priority == 'Medium')
-						{!!'<div class="ui green right ribbon label">Medium</div>'!!}
-					@elseif($ticket->priority == 'High')
-						{!!'<div class="ui orange right ribbon label">High</div>'!!}
-					@elseif($ticket->priority == 'Urgent')
-						{!!'<div class="ui red right ribbon label">Urgent</div>'!!}
-					@endif
-
-					<div class="header"><a href="ticket\{{$ticket->id}}">{{$ticket->title}}</a></div>
-					<div class="meta">Report By: <span class="ui teal sub header">{{DB::table('customers')->find($ticket->report_by)->username}}</span></div>
-					<div class="meta">Assign To: <span class="ui orange sub header">{{DB::table('agents')->find($ticket->assign_to)->username}}</span></div>
+					<div class="ui {{$colorcard}} right ribbon label">{{$ticket->status}} {{$ticket->category}}</div>
+					
+					<div class="header"><span style="font-size: small;">#{{$ticket->id}}.</span><a href="ticket\{{$ticket->id}}"> {{$ticket->title}}</a></div>
+					<div class="meta">Report By: <span class="ui teal sub header">{{DB::table('users')->find($ticket->report_by)->username}}</span></div>
+					<div class="meta">Assign To: <span class="ui orange sub header">{{DB::table('users')->find($ticket->assign_to)->username}}</span></div>
 					<div class="description">
-						{{str_limit($ticket->description,200,' ...')}}
+						{!!str_limit($ticket->description,200,' ...')!!}
 					</div>
+				</div>
+				
+				<div class="extra content">
+					<span class="right floated">
+						<h5 class="ui {{$colorh4}} header" style="opacity: 0.7;">Priority : {{$ticket->priority}}</h5>
+					</span>
+					<span>
+						<i class="comment icon"></i>{{$ticket->messages()->count()}} Messages
+					</span>
 				</div>
 			</div>
 		@endforeach

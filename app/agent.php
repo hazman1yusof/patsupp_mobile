@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-
 class agent extends Authenticatable
 {
     //
+
+    protected $guard = 'agent';
 }

@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\message;
+use App\ticket;
 use Illuminate\Http\Request;
+use DB;
+use Auth;
 
 class MessageController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -34,8 +43,42 @@ class MessageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        ////validate message
+        $validatedData = $request->validate([
+            'ticket_id' => 'required',
+            'message' => 'required|min:15',
+        ]);
+
+        ////check message type
+        $user = Auth::user();
+        $msgType = $user->type;
+        if(!empty($request->remark)){
+            $msgType = 'remark';
+        }
+
+        ////determined ticket status
+        $ticket_status = $request->status;
+        if($ticket_status == 'normal'){
+            $ticket_status = ($user->type == 'customer') ? 'Open' : 'Answered';
+        }
+
+        ////create new message
+        $message = new message;
+
+        $message->ticket_id = $request->ticket_id;
+        $message->text = $request->message;
+        $message->message_type = $msgType;
+        $message->user_id = $user->id;
+
+        $message->save();
+
+        ////update ticket status
+        $ticket = ticket::find($request->ticket_id);
+        $ticket->status = $ticket_status;
+        $ticket->save();
+
+        return redirect()->back()->with('data', '#segment_'.$message->id);
     }
 
     /**
@@ -57,7 +100,7 @@ class MessageController extends Controller
      */
     public function edit(message $message)
     {
-        //
+    
     }
 
     /**
@@ -69,7 +112,11 @@ class MessageController extends Controller
      */
     public function update(Request $request, message $message)
     {
-        //
+        $message->text = $request->text;
+        $message->updflg = '1';
+        $message->save();
+
+        return redirect()->back()->with('data', '#segment_'.$message->id);
     }
 
     /**

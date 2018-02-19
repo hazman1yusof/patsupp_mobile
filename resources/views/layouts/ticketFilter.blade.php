@@ -1,3 +1,7 @@
+<?php
+	$display = (Auth::user()->type=='customer') ? "none":"";
+?>
+
 <div class="ui teal segment" style="padding-bottom: 50px;">
 	<a class="ui teal top left attached label" id="toggleFilter">Toggle Filter Visibility</a>
   	<form method="GET" class="ui form" id="filterForm" action="/ticket" name="ticketSearch">
@@ -8,23 +12,6 @@
 					<label>Title</label>
 					<input type="text" name="title" placeholder="Title" value="@if(!empty(Request::input('title'))){{Request::input('title')}}@endif">
 				</div>
-				<div class="field">
-					<label>Report By</label>
-					<div class="ui fluid multiple search normal selection dropdown" id="for_reportby">
-						<input type="hidden" name="report_by">
-						<i class="dropdown icon"></i>
-						<div class="default text">Report By</div>
-						<div class="menu">
-							@foreach ($customers as $customer)
-								<div class="item" data-value="{{$customer->id}}">{{$customer->username}}</div>
-							@endforeach
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="field">
-			<div class="two fields">
 				<div class="field">
 					<label>Assign To</label>
 					<div class="ui fluid multiple search normal selection dropdown" id="for_assignto">
@@ -38,7 +25,24 @@
 						</div>
 					</div>
 				</div>
-				<div class="field">
+			</div>
+		</div>
+		<div class="field">
+			<div class="two fields">
+				<div class="field" style="display: {{$display}}">
+					<label>Report By</label>
+					<div class="ui fluid multiple search normal selection dropdown" id="for_reportby">
+						<input type="hidden" name="report_by">
+						<i class="dropdown icon"></i>
+						<div class="default text">Report By</div>
+						<div class="menu">
+							@foreach ($customers as $customer)
+								<div class="item" data-value="{{$customer->id}}">{{$customer->username}}</div>
+							@endforeach
+						</div>
+					</div>
+				</div>
+				<div class="field" style="display: {{$display}}">
 					<label>Created By</label>
 					<input type="text" name="created_by" placeholder="Created By" value="@if(!empty(Request::input('created_by'))){{Request::input('created_by')}}@endif">
 				</div>
@@ -46,20 +50,6 @@
 		</div>
 		<div class="field">
 			<div class="three fields">
-				<div class="field">
-					<label>Status</label>
-					<div class="ui fluid multiple search normal selection dropdown" id="for_status">
-						<input type="hidden" name="status">
-						<i class="dropdown icon"></i>
-						<div class="default text">Status</div>
-						<div class="menu">
-							<div class="item" data-value="open">Open</div>
-							<div class="item" data-value="pending">Pending</div>
-							<div class="item" data-value="resolved">Resolved</div>
-							<div class="item" data-value="closed">Closed</div>
-						</div>
-					</div>
-				</div>
 				<div class="field">
 					<label>Priority</label>
 					<div class="ui fluid multiple search normal selection dropdown" id="for_priority">
@@ -71,6 +61,20 @@
 							<div class="item" data-value="Medium">Medium</div>
 							<div class="item" data-value="High">High</div>
 							<div class="item" data-value="Urgent">Urgent</div>
+						</div>
+					</div>
+				</div>
+				<div class="field">
+					<label>Status</label>
+					<div class="ui fluid multiple search normal selection dropdown" id="for_status">
+						<input type="hidden" name="status">
+						<i class="dropdown icon"></i>
+						<div class="default text">Status</div>
+						<div class="menu">
+							<div class="item" data-value="Open">Open</div>
+							<div class="item" data-value="Answered">Answered</div>
+							<div class="item" data-value="Resolved">Resolved</div>
+							<div class="item" data-value="closed">Closed</div>
 						</div>
 					</div>
 				</div>

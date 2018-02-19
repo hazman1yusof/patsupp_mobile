@@ -75,3 +75,15 @@ div [class*="right floated"] {
   float: right;
    margin-right: 0.25em;
 }
+#toTop {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 101;
+  background-color: #284255;
+}
+#toTop i {
+  font-size: 25px;
+  color: #f7fdff;
+}

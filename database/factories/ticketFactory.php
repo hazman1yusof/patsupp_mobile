@@ -6,7 +6,7 @@ $factory->define(App\ticket::class, function (Faker $faker) {
     return [
         'title' => $faker->word,
         'description' => $faker->paragraphs($nb = 3, $asText = true),
-        'status' => $faker->randomElement($array = array ('open','pending','resolved','closed')),
+        'status' => $faker->randomElement($array = array ('Open','Answered','Resolved','Closed')),
         'priority' => $faker->randomElement($array = array ('Low','Medium','High','Urgent')),
         'category' => $faker->randomElement($array = array ('None','Question','Incident','Problem')),
         'assign_to' => $faker->numberBetween($min = 1, $max = 15),

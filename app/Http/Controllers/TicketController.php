@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\ticket;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Input;
+use Auth;
+use App\message;
 
 class TicketController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +23,9 @@ class TicketController extends Controller
      */
     public function index(Request $request)
     {
-        $customers = DB::table('customers')->get();
-        $agents = DB::table('agents')->get();
+        $customers = DB::table('users')->where('type','=','customer')->get();
+        $agents = DB::table('users')->where('type','=','agent')->get();
+        $user = Auth::user();
 
         $tickets = new ticket;
 
@@ -61,6 +70,13 @@ class TicketController extends Controller
                 }
             });
         }
+
+        if($user->type=='customer'){
+            $tickets = $tickets->where('report_by','=',$user->id);
+        }
+
+        $tickets = $tickets->orderBy('id', 'desc');
+
         if(!empty($request->paginate)){
             $paginate = $request->paginate;
         }else{
@@ -68,6 +84,10 @@ class TicketController extends Controller
         }
 
         $tickets = $tickets->paginate($paginate);
+
+        $tickets->appends(Input::except('page'))->links();
+
+        // dd($tickets);
 
         return view('ticket',compact('tickets','customers','agents'));
     }
@@ -78,8 +98,10 @@ class TicketController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {   
+        $customers = DB::table('users')->where('type','=','customer')->get();
+        $agents = DB::table('users')->where('type','=','agent')->get();
+        return view('ticket_create',compact('agents','customers'));
     }
 
     /**
@@ -89,8 +111,35 @@ class TicketController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        $report_validate = (Auth::user()->type=='agent') ? 'required':'';
+
+        ////validate ticket
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'category' => 'required',
+            'priority' => 'required',
+            'description' => 'required|min:15',
+            'assign_to' => 'required',
+            'created_by' => 'required',
+            'report_by' => $report_validate
+        ]);
+
+        ////create new ticket
+        $message = new ticket;
+
+        $message->title = $request->title;
+        $message->category = $request->category;
+        $message->priority = $request->priority;
+        $message->description = $request->description;
+        $message->assign_to = $request->assign_to;
+        $message->created_by = $request->created_by;
+        $message->status = "Open";
+        $message->report_by = (Auth::user()->type=='customer') ? Auth::id() : $request->report_by;
+
+        $message->save();
+
+        return redirect()->route('ticket');
     }
 
     /**
@@ -101,8 +150,12 @@ class TicketController extends Controller
      */
     public function show(ticket $ticket)
     {
-        $customers = DB::table('customers')->get();
-        $agents = DB::table('agents')->get();
+        if(Auth::user()->type=='customer' && Auth::id() != $ticket->report_by){
+            return redirect()->back();
+        }
+
+        $customers = DB::table('users')->where('type','=','customer')->get();
+        $agents = DB::table('users')->where('type','=','agent')->get();
 
         return view('ticket_detail',compact('ticket','customers','agents'));
     }
@@ -127,7 +180,20 @@ class TicketController extends Controller
      */
     public function update(Request $request, ticket $ticket)
     {
-        //
+        if(!empty($request->text)){
+            $ticket->description = $request->text;
+            $ticket->updflg = '1';
+        }
+        if(!empty($request->status)){
+            $ticket->assign_to = $request->assign_to;
+            $ticket->status = $request->status;
+            $ticket->priority = $request->priority;
+            $ticket->category = $request->category;
+        }
+
+        $ticket->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -139,5 +205,18 @@ class TicketController extends Controller
     public function destroy(ticket $ticket)
     {
         //
+    }
+
+    public function answer(Request $request)
+    {
+
+        $user = Auth::user();
+        $customers = DB::table('users')->where('type','=','customer')->get();
+        $agents = DB::table('users')->where('type','=','agent')->get();
+
+        $answer = message::where("user_id","=",$user->id)->distinct('ticket_id')->pluck("ticket_id");
+        $tickets = ticket::whereIn('id', $answer)->paginate();
+
+        return view('ticket',compact('tickets','customers','agents'));
     }
 }

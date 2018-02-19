@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\customer;
 use Illuminate\Http\Request;
+use App\User;
 
 class CustomerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +19,8 @@ class CustomerController extends Controller
     public function index()
     {
         //
-        return view('customer');
+        $customers = User::where('type','=','customer')->orderBy('id', 'desc')->get();
+        return view('customer',compact('customers'));
     }
 
     /**
@@ -36,7 +41,28 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        ////validate message
+        $validatedData = $request->validate([
+            'username' => 'required|min:5|unique:users',
+            'password' => 'required|min:5',
+            'company' => '',
+            'note' => '',
+        ]);
+
+        ////create new message
+        $user = new User;
+
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->type = 'customer';
+        $user->password = bcrypt($request->password);
+        $user->company = $request->company;
+        $user->note = $request->note;
+        $user->remember_token = str_random(10);
+
+        $user->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -68,9 +94,28 @@ class CustomerController extends Controller
      * @param  \App\customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, customer $customer)
-    {
-        //
+    public function update(Request $request, User $user)
+    {   
+        // dd($request);
+
+        $pass_check = (!empty($request->password))?'required|min:5':'';
+
+        ////validate message
+        $validatedData = $request->validate([
+            'password' => $pass_check,
+            'company' => '',
+            'note' => '',
+        ]);
+
+        if(!empty($request->password)){
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->company = $request->company;
+        $user->note = $request->note;
+        $user->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -79,8 +124,11 @@ class CustomerController extends Controller
      * @param  \App\customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(customer $customer)
-    {
-        //
+    public function destroy(User $user)
+    {   
+        $user->status = ($user->status == "Active")?'Inactive':'Active';
+        $user->save();
+
+        return redirect()->back();
     }
 }

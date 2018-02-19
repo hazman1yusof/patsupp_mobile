@@ -17,12 +17,13 @@ class CreateTicketsTable extends Migration
             $table->increments('id');
             $table->string('title')->nullable();
             $table->text('description')->nullable();
-            $table->string('status')->nullable();
-            $table->string('priority')->nullable();
-            $table->string('category')->nullable();
-            $table->string('assign_to')->nullable();
-            $table->string('report_by')->nullable();
+            $table->string('status',30)->nullable();
+            $table->string('priority',30)->nullable();
+            $table->string('category',30)->nullable();
+            $table->string('assign_to',10)->nullable();
+            $table->string('report_by',10)->nullable();
             $table->string('created_by')->nullable();
+            $table->string('updflg', 5)->default('0')->nullable();
             $table->timestamps();
         });
     }

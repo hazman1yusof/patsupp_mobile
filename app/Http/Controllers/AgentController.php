@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\agent;
+use App\User;
 use Illuminate\Http\Request;
 
 class AgentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +20,8 @@ class AgentController extends Controller
     public function index()
     {
         //
-        return view('agent');
+        $agents = User::where('type','=','agent')->orderBy('id', 'desc')->get();
+        return view('agent',compact('agents'));
     }
 
     /**
@@ -36,7 +42,27 @@ class AgentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        ////validate message
+        $validatedData = $request->validate([
+            'username' => 'required|min:5|unique:users',
+            'password' => 'required|min:5',
+            'note' => '',
+        ]);
+
+        ////create new message
+        $user = new User;
+
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->type = 'agent';
+        $user->password = bcrypt($request->password);
+        $user->company = $request->company;
+        $user->note = $request->note;
+        $user->remember_token = str_random(10);
+
+        $user->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -68,9 +94,26 @@ class AgentController extends Controller
      * @param  \App\agent  $agent
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, agent $agent)
+    public function update(Request $request, User $user)
     {
-        //
+        // dd($request);
+
+        $pass_check = (!empty($request->password))?'required|min:5':'';
+
+        ////validate message
+        $validatedData = $request->validate([
+            'password' => $pass_check,
+            'note' => '',
+        ]);
+
+        if(!empty($request->password)){
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->note = $request->note;
+        $user->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -79,8 +122,11 @@ class AgentController extends Controller
      * @param  \App\agent  $agent
      * @return \Illuminate\Http\Response
      */
-    public function destroy(agent $agent)
+    public function destroy(User $user)
     {
-        //
+        $user->status = ($user->status == "Active")?'Inactive':'Active';
+        $user->save();
+
+        return redirect()->back();
     }
 }

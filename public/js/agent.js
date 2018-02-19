@@ -29,17 +29,16 @@ $(document).ready(function() {
     $('#edit').click(function(){
     	$('#edit_modal').modal('setting', 'closable', false).modal('show');
     	let tabledata = table.rows( { selected: true } ).data()[0];
+        console.log(tabledata);
 
     	$("#form_edit input[name='username']").val(tabledata[1]);
-    	$("#form_edit input[name='email']").val(tabledata[3]);
-    	$("#form_edit input[name='company']").val(tabledata[4]);
+    	$("#form_edit input[name='email']").val(tabledata[4]);
     	$("#form_edit textarea[name='note']").val(tabledata[5]);
 
     	$("#form_edit").attr('action',"/customer/"+tabledata[0]);
     });
 
     $('#delete').click(function(){
-
     	if(table.rows( '.selected' ).any()){
 	    	let tabledata = table.rows( { selected: true } ).data()[0];
 	    	$("#form_delete").attr('action',"/customer/"+tabledata[0]);
@@ -50,12 +49,11 @@ $(document).ready(function() {
     	}
     });
 
-	$('#form')
-    .form({
-      fields: {
-        username   : 'empty',
-        password   : 'empty'
-      }
+	$('#form').form({
+        fields: {
+            username   : 'empty',
+            password   : 'empty'
+        }
     });
 
     $("input[name='password']").popup();

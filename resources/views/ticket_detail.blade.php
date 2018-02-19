@@ -4,32 +4,55 @@
 @include('layouts.ticketFilter')
 
 <h4 class="ui horizontal divider header">Ticket Detail</h4>
+<input type="hidden" id="scroll_btm" value="@if(session()->has('data')){{session('data')}}@endif">
 <div class="ui segments">
 	<div class="ui secondary clearing segment">
-		<h3 class="ui header" style="margin-bottom: 10px">{{$ticket->title}}</h3>
+		<h3 class="ui header" style="margin-bottom: 10px"><span style="font-size: small;">#{{$ticket->id}}.</span> {{$ticket->title}}</h3>
 		<h5 class="ui header" style="margin-top: 0px">
 			<?php  
-				$reportBy = DB::table('customers')->find($ticket->report_by)->username;
+				$reportBy = DB::table('users')->find($ticket->report_by)->username;
 			?>
 			<div class="avatar-circle left floated user_color">
 				<span class="initials">{{strtoupper($reportBy[0])}}</span>
 			</div>
 			<div class="content" style="margin-left: 0.5em;">
-				Report By
-				<span class="sub header">{{$reportBy}}</span>
+				Report By 
+				@if($ticket->updflg)
+					<span style="color: red;opacity: 0.5">*Edited Message</span>
+				@endif
+				<span class="sub header">{{$reportBy}} </span>
 			</div>
-			<div class="ui right floated">Report On 
+			<div class="ui right floated" >
+				@if(Auth::id() == $ticket->report_by)
+					<button class="ui blue mini basic button right floated" type="button" data-id="{{$ticket->id}}" data-type="ticket" edit>Edit</button>
+				@endif
 				<span class="sub header">{{Carbon\Carbon::parse($ticket->created_at)->toDayDateTimeString()}}</span>
 			</div>
 			
 		</h5>
 	</div>
-	<div class="ui very padded attached segment teal tertiary inverted" style="border-color: rgb(0, 181, 173);">
-		{!!$ticket->description!!}
+	<div class="ui clearing padded attached segment teal tertiary inverted" style="border-color: rgb(0, 181, 173);">
+
+		<form method="POST" class="ui form" id="messageForm" action="/ticket/{{$ticket->id}}">
+			{{csrf_field()}}
+    		<input type="hidden" name="_method" value="PUT">
+    		<input type="hidden" name="text" id="ticket_{{$ticket->id}}_text">
+			<div id="ticket_{{$ticket->id}}">
+				{!!$ticket->description!!}
+			</div>
+			<div class="ui buttons right floated" style="display: none; margin-top: 10px" id="ticket_{{$ticket->id}}_button">
+				<button class="ui button" type="button" data-id="{{$ticket->id}}" data-type="ticket" cancel>Cancel</button>
+				<button class="ui teal button" data-id="{{$ticket->id}}" data-type="ticket" save>Update</button>
+			</div>
+		</form>
+
 	</div>
 	<div class="ui bottom attached button" id="edit_form_toggle">Ticket Info</div>
 	<div class="ui segment clearing" id="edit_form_segment">
-		<form class="ui form" id="edit_form">
+		<form class="ui form" id="ticketEditForm" method="POST" class="ui form" action="/ticket/{{$ticket->id}}">
+			{{csrf_field()}}
+    		<input type="hidden" name="_method" value="PUT">
+			<input type="hidden" name="ticket_id" value="{{$ticket->id}}">
 			<div class="field">
 				<div class="four fields">
 					<div class="field">
@@ -52,10 +75,10 @@
 							<i class="dropdown icon"></i>
 							<div class="default text">Status</div>
 							<div class="menu">
-								<div class="item" data-value="open">Open</div>
-								<div class="item" data-value="pending">Pending</div>
-								<div class="item" data-value="resolved">Resolved</div>
-								<div class="item" data-value="closed">Closed</div>
+								<div class="item" data-value="Open">Open</div>
+								<div class="item" data-value="Answered">Answered</div>
+								<div class="item" data-value="Resolved">Resolved</div>
+								<div class="item" data-value="Closed">Closed</div>
 							</div>
 						</div>
 					</div>
@@ -89,7 +112,9 @@
 					</div>
 				</div>
 			</div>
-			<button class="ui teal button right floated"> Edit Ticket </button>
+			@if(Auth::id() == $ticket->report_by||Auth::user()->type == 'agent')
+				<button class="ui teal button right floated"> Update </button>
+			@endif
 	  	</form>
 	</div>
 </div>
@@ -97,42 +122,100 @@
 <h4 class="ui horizontal divider header">Ticket Messages</h4>
 
 @foreach($ticket->messages()->get() as $message)
-	<div class="ui segments">
+	<?php
+		$showsegment = ($message->message_type == 'remark' && Auth::user()->type == 'customer') ? false : true;
+	?>
+	@if($showsegment)
+	<div class="ui segments" id="segment_{{$message->id}}">
 		<div class="ui secondary clearing segment">
 			<h5 class="ui header">
 				<?php  
-
-					if($message->message_type == 'user'){
-						$postedBy = DB::table('customers')->find($message->user_id)->username;
-					}else{
-						$postedBy = DB::table('agents')->find($message->user_id)->username;
-					}
-
+					$postedBy = DB::table('users')->find($message->user_id)->username;
 				?>
-				<div class="avatar-circle left floated @if($message->message_type == 'user'){{'user_color'}}@else{{'admin_color'}}@endif">
+				<div class="avatar-circle left floated @if($message->message_type == 'customer'){{'user_color'}}@else{{'admin_color'}}@endif">
 					<span class="initials">{{strtoupper($postedBy[0])}}</span>
 				</div>
 				<div class="content" style="margin-left: 0.5em;">
-					Posted By @if($message->message_type != 'user'){!!'<a>Agent</a>'!!}@endif 
+					Posted By @if($message->message_type != 'customer'){!!'<a>Agent</a>'!!}@endif 
+					@if($message->updflg)
+						<span style="color: red;opacity: 0.5">*Edited Message</span>
+					@endif
 					<span class="sub header">{{$postedBy}}</span>
 				</div>
-  				<div class="ui right floated">Posted On 
-					<span class="sub header">{{Carbon\Carbon::parse($message->created_at)->toDayDateTimeString()}}</span>
+  				<div class="ui right floated" >
+					@if(Auth::id() == $message->user_id)
+						<button class="ui blue mini basic button right floated" type="button" data-id="{{$message->id}}" data-type="message" edit>Edit</button>
+					@endif
+					<span class="sub header" >{{Carbon\Carbon::parse($message->created_at)->toDayDateTimeString()}}</span>
   				</div>
 			</h5>
 		</div>
-		<div class="ui @if($message->message_type == 'user'){{'teal'}}@elseif($message->message_type == 'admin'){{'orange'}}@else{{'red tertiary inverted'}}@endif very padded segment">
-	  		{!!$message->text!!}
+		<div class="ui clearing @if($message->message_type == 'customer'){{'teal'}}@elseif($message->message_type == 'agent'){{'orange'}}@else{{'red tertiary inverted'}}@endif padded segment">
+
+			<form method="POST" class="ui form" id="messageForm" action="/message/{{$message->id}}">
+				{{csrf_field()}}
+    			<input type="hidden" name="_method" value="PUT">
+    			<input type="hidden" name="text" id="message_{{$message->id}}_text">
+		  		<div id="message_{{$message->id}}">{!!$message->text!!}</div>
+		  		<div class="ui buttons right floated" style="display: none; margin-top: 10px" id="message_{{$message->id}}_button">
+					<button class="ui button" type="button" data-id="{{$message->id}}" data-type="message" cancel>Cancel</button>
+					<button class="ui teal button" data-id="{{$message->id}}" data-type="message" save>Update</button>
+				</div>
+			</form>
+
 		</div>
 	</div>
+	@endif
 
 @endforeach
 
-<div class="ui segments">
-	<div class="ui segment">
-		<textarea id="summernote" name="message"></textarea>
+	<form method="POST" class="ui form" id="messageForm" action="/message">
+		{{csrf_field()}}
+		<input type="hidden" name="status" value="normal">
+		<input type="hidden" name="ticket_id" value="{{$ticket->id}}">
+		<div class="ui segments clearing" id="newMessage">
+			<div class="ui segment">
+				<textarea id="summernote" name="message"></textarea>
+			</div>
+			<div class="ui segment">
+				<div class="fields">
+					<div class="field">
+						<div class="ui teal buttons">
+							<button class="ui button" type="submit">Submit Message</button>
+							<div class="ui combo top right pointing dropdown icon button" id="submitMessage">
+								<i class="dropdown icon"></i>
+								<div class="menu">
+									<div class="item" data-value="Resolved">Submit and Resolve</div>
+									<div class="item" data-value="Closed">Submit and Closed</div>
+									<div class="item" data-value="normal">Submit Message</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					@if(Auth::user()->type == 'agent')
+						<div class="field">
+							<div class="ui checkbox column" style="margin-left: 10px;margin-top: 10px" data-content="Remark wont be seen by customer, only among agents can see remark messages">
+								<input type="checkbox" tabindex="0" class="hidden"  name="remark">
+								<label>Post as remark</label>
+							</div>
+						</div>
+					@endif
+				</div>
+			</div>
+		</div>
+	</form>
+
+	@if($errors->any())
+	<div class="ui centered grid">
+		<div class="ui error message">
+			<ul>
+			@foreach($errors->all() as $error)
+				<li>{{$error}}</li>
+			@endforeach
+			</ul>
+		</div>
 	</div>
-</div>
+	@endif
 
 @endsection
 
