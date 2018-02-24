@@ -17,7 +17,7 @@ class CreateMessagesTable extends Migration
             $table->increments('id');
             $table->string('ticket_id',10)->nullable();
             $table->timestamps();
-            $table->text('text')->nullable();
+            $table->MEDIUMTEXT('text')->nullable();
             $table->string('message_type',30)->nullable();
             $table->string('user_id',10)->nullable();
             $table->string('updflg', 5)->default('0')->nullable();

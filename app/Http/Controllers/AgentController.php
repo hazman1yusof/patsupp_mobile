@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\ticket;
+use App\message;
 use Illuminate\Http\Request;
 
 class AgentController extends Controller
@@ -65,15 +67,23 @@ class AgentController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\agent  $agent
-     * @return \Illuminate\Http\Response
-     */
-    public function show(agent $agent)
+    public function agent_detail(User $user)
     {
-        //
+
+        $assign = ticket::where("assign_to","=",$user->id)->count();
+
+        $attention = ticket::where("assign_to","=",$user->id)
+            ->where("priority","=","Urgent")
+            ->whereIn('status', ['Open','Answered'])
+            ->count();
+
+        $open = ticket::where("assign_to","=",$user->id)->whereIn('status', ['Open','Answered'])->count();
+
+        $answer = message::where("user_id","=",$user->id)->distinct('ticket_id')->count();
+
+        $created = ticket::where("created_by","=",$user->username)->count();
+
+        return view('agent_detail',compact('user','assign','attention','answer','open','created'));
     }
 
     /**

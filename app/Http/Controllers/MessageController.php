@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\message;
 use App\ticket;
+use App\User;
+use App\Mail\Notification;
 use Illuminate\Http\Request;
 use DB;
+use Mail; 
 use Auth;
 
 class MessageController extends Controller
@@ -77,6 +80,14 @@ class MessageController extends Controller
         $ticket = ticket::find($request->ticket_id);
         $ticket->status = $ticket_status;
         $ticket->save();
+
+        ////mail notification
+        if($user->type == "agent" && $msgType != 'remark'){
+            $report_by = User::find($ticket->report_by);
+            $notify = new Notification($report_by,$request->ticket_id);
+            Mail::to($report_by)->send($notify);
+        }
+
 
         return redirect()->back()->with('data', '#segment_'.$message->id);
     }

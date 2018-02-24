@@ -52,7 +52,7 @@
 
 					<div class="ui {{$colorcard}} right ribbon label">{{$ticket->status}} {{$ticket->category}}</div>
 					
-					<div class="header"><span style="font-size: small;">#{{$ticket->id}}.</span><a href="ticket\{{$ticket->id}}"> {{$ticket->title}}</a></div>
+					<div class="header"><span style="font-size: small;">#{{$ticket->id}}.</span> {{$ticket->title}}</div>
 					<div class="meta">Report By: <span class="ui teal sub header">{{DB::table('users')->find($ticket->report_by)->username}}</span></div>
 					<div class="meta">Assign To: <span class="ui orange sub header">{{DB::table('users')->find($ticket->assign_to)->username}}</span></div>
 					<div class="description">

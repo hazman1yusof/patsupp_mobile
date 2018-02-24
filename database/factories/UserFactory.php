@@ -17,7 +17,7 @@ $factory->define(App\User::class, function (Faker $faker) {
     return [
         'username' => $faker->userName,
         'type' => $faker->randomElement($array = array ('agent','customer')),
-        'email' => $faker->unique()->safeEmail,
+        'email' => "hazman.yusof@gmail.com",
         'company' => $faker->company,
         'note' => $faker->catchPhrase,
         'password' => bcrypt('rahsia'),

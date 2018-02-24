@@ -41,6 +41,8 @@ Route::put('/agent/{user}', "AgentController@update");
 
 Route::delete('/agent/{user}', "AgentController@destroy");
 
+Route::get('/agent_detail/{user}', "AgentController@agent_detail");
+
 Route::get('/settings', "SettingsController@index");
 
 Route::get('/settings/change_password', "SettingsController@change_password");
@@ -51,7 +53,7 @@ Route::post('/message', "MessageController@store");
 
 Route::put('/message/{message}', "MessageController@update");
 
-Route::get('/ticket/answer', "TicketController@answer");
+Route::get('/ticket/answer/{user}', "TicketController@answer");
 
 Route::get('/ticket/create', "TicketController@create");
 

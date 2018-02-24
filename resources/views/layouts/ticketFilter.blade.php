@@ -94,6 +94,18 @@
 				</div>
 			</div>
 		</div>
+		<div class="field">
+			<div class="two fields">
+				<div class="field">
+					<label>Date From</label>
+					<input type="date" name="date_from" placeholder="Date From" value="@if(!empty(Request::input('date_from'))){{Request::input('date_from')}}@endif">
+				</div>
+				<div class="field">
+					<label>Date To</label>
+					<input type="date" name="date_to" placeholder="Date To" value="@if(!empty(Request::input('date_to'))){{Request::input('date_to')}}@endif">
+				</div>
+			</div>
+		</div>
 
 		<button class="ui grey button right floated" type="button" id="reset"> Reset </button>
 		<button class="ui teal button right floated"> Filter Ticket </button>

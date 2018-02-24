@@ -15,7 +15,7 @@ $(document).ready(function() {
 	        if(status == 'Inactive'){
 	        	$('#delete').text("Activate");
 	        }else{
-	        	$('#delete').text("Delete");
+	        	$('#delete').text("Deactivate");
 	        }
 	    }
 	});
@@ -53,8 +53,8 @@ $(document).ready(function() {
 	$('#form')
     .form({
       fields: {
-        username   : 'empty',
-        password   : 'empty'
+        username   : ['minLength[5]', 'empty'],
+        password   : ['minLength[5]', 'empty']
       }
     });
 

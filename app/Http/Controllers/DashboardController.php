@@ -18,19 +18,35 @@ class DashboardController extends Controller
     {   
         $user = Auth::user();
 
-        $assign = ticket::where("assign_to","=",$user->id)->count();
+        if($user->type == 'agent'){
 
-        $attention = ticket::where("assign_to","=",$user->id)
-            ->where("priority","=","Urgent")
-            ->whereIn('status', ['Open','Answered'])
-            ->count();
+            $assign = ticket::where("assign_to","=",$user->id)->count();
 
-        $open = ticket::where("assign_to","=",$user->id)->whereIn('status', ['Open','Answered'])->count();
+            $attention = ticket::where("assign_to","=",$user->id)
+                ->where("priority","=","Urgent")
+                ->whereIn('status', ['Open','Answered'])
+                ->count();
 
-        $answer = message::where("user_id","=",$user->id)->distinct('ticket_id')->count();
+            $open = ticket::where("assign_to","=",$user->id)->whereIn('status', ['Open','Answered'])->count();
 
-        $created = ticket::where("created_by","=",$user->username)->count();
+            $answer = message::where("user_id","=",$user->id)->distinct('ticket_id')->count();
 
-        return view('dashboard',compact('user','assign','attention','answer','open','created'));
+            return view('dashboard',compact('user','assign','attention','answer','open','created'));
+
+        }else if($user->type == 'customer'){
+
+            $report_by = ticket::where("report_by","=",$user->id)->count();
+
+            $answered = ticket::where("report_by","=",$user->id)->where('status', 'Answered')->count();
+
+            $open = ticket::where("report_by","=",$user->id)->where('status', 'Open')->count();
+
+            $resolved = ticket::where("report_by","=",$user->id)->where('status', 'Resolved')->count();
+
+            $closed = ticket::where("report_by","=",$user->id)->where('status', 'Closed')->count();
+
+            return view('dashboard',compact('user','report_by','answered','open','resolved','closed'));
+
+        }
     }
 }

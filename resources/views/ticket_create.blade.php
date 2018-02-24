@@ -3,6 +3,7 @@
 @section('content')
 	<form class="ui form" method="POST" action="/ticket/create">
 		<div class="ui segment clearing">
+            <div class="ui error message"></div>
 			{{csrf_field()}}
 			<div class="field">
 				<label>Ticket Title</label>
@@ -82,7 +83,6 @@
 			</div>
 			@endif
 
-            <div class="ui error message"></div>
 			<button class="ui teal button right floated"> Create Ticket </button>
 		</div>
 	</form>

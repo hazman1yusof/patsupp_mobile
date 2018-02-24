@@ -1,6 +1,12 @@
 @extends('layouts.main')
 
 @section('content')
+    <div class="segment" style="margin-bottom: 10px">
+        <button type="button" id="add" class="ui button">Add</button>
+        <button type="button" id="edit" class="ui button">Edit</button>
+        <button type="button" id="delete" class="ui button">Deactivate</button>
+        <button type="button" id="detail" class="ui button" data-agent="1">Detail</button>
+    </div>
 	<table id="example" class="ui celled table" cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -26,12 +32,6 @@
         </tbody>
 	</table>
 
-    <div class="segment" style="margin-top: 10px">
-        <button type="button" id="add" class="ui button">Add</button>
-        <button type="button" id="edit" class="ui button">Edit</button>
-        <button type="button" id="delete" class="ui button">Delete</button>
-    </div>
-
     @if($errors->any())
     <div class="segment">
         <div class="ui error message">
@@ -46,10 +46,11 @@
 
     <div class="ui modal" id="add_modal">
         <div class="header">
-            Create New Customer
+            Create New Agent
         </div>
         <div class="content">
             <form class="ui form" method="POST" action="/agent" id="form">
+                <div class="ui error message"></div>
                 {{csrf_field()}}
                 <div class="field">
                     <label>Username</label>
@@ -77,7 +78,7 @@
 
     <div class="ui modal" id="edit_modal">
         <div class="header">
-            Edit Customer
+            Edit Agent
         </div>
         <div class="content">
             <form class="ui form" method="POST" action="/agent/" id="form_edit">

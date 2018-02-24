@@ -36,7 +36,7 @@
 					</div>
 				</a>
 			</div>
-			<div class="description">Open ticket for you</div>
+			<div class="description">Open and Answered ticket for you</div>
 		</div>
 	</div>
 
@@ -59,7 +59,7 @@
 	<div class="card">
 		<div class="content">
 			<div class="ui center aligned header">
-				<a class="ui button center" href="/ticket/answer">
+				<a class="ui button center" href="/ticket/answer/{{$user->id}}">
 					<div class="ui statistic">
 						<div class="value">
 	      					<i class="ticket icon"></i>{{$answer}}
@@ -68,23 +68,92 @@
 					</div>
 				</a>
 			</div>
-			<div class="description">Ticket answered by you</div>
+			<div class="description">Ticket replied by you</div>
+		</div>
+	</div>
+
+	@endif
+
+	@if(Auth::user()->type == 'customer')
+
+
+	<div class="card">
+		<div class="content">
+			<div class="ui center aligned header">
+				<a class="ui button center" href="/ticket?report_by={{Auth::id()}}">
+					<div class="ui statistic">
+						<div class="value">
+	      					<i class="ticket icon"></i>{{$report_by}}
+						</div>
+						<div class="label">Tickets</div>
+					</div>
+				</a>
+			</div>
+			<div class="description">Ticket Created by you</div>
 		</div>
 	</div>
 
 	<div class="card">
 		<div class="content">
 			<div class="ui center aligned header">
-				<a class="ui button center" href="/ticket?created_by={{Auth::user()->username}}">
+				<a class="ui button center" href="/ticket?report_by={{Auth::id()}}&status=Answered">
 					<div class="ui statistic">
 						<div class="value">
-	      					<i class="ticket icon"></i>{{$created}}
+	      					<i class="ticket icon"></i>{{$answered}}
 						</div>
 						<div class="label">Tickets</div>
 					</div>
 				</a>
 			</div>
-			<div class="description">Ticket created by you</div>
+			<div class="description">Answered ticket for you</div>
+		</div>
+	</div>
+
+	<div class="card">
+		<div class="content">
+			<div class="ui center aligned header">
+				<a class="ui button center" href="/ticket?report_by={{Auth::id()}}&status=Open">
+					<div class="ui statistic">
+						<div class="value">
+	      					<i class="ticket icon"></i>{{$open}}
+						</div>
+						<div class="label">Tickets</div>
+					</div>
+				</a>
+			</div>
+			<div class="description">Open ticket</div>
+		</div>
+	</div>
+
+	<div class="card">
+		<div class="content">
+			<div class="ui center aligned header">
+				<a class="ui button center" href="/ticket?report_by={{Auth::id()}}&status=Resolved">
+					<div class="ui statistic">
+						<div class="value">
+	      					<i class="ticket icon"></i>{{$resolved}}
+						</div>
+						<div class="label">Tickets</div>
+					</div>
+				</a>
+			</div>
+			<div class="description">Resolved ticket</div>
+		</div>
+	</div>
+
+	<div class="card">
+		<div class="content">
+			<div class="ui center aligned header">
+				<a class="ui button center" href="/ticket?report_by={{Auth::id()}}&status=Closed">
+					<div class="ui statistic">
+						<div class="value">
+	      					<i class="ticket icon"></i>{{$closed}}
+						</div>
+						<div class="label">Tickets</div>
+					</div>
+				</a>
+			</div>
+			<div class="description">Closed ticket</div>
 		</div>
 	</div>
 	@endif

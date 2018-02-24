@@ -12,11 +12,13 @@ $(document).ready(function() {
 	    if ( type === 'row' ) {
 	        var data = table.rows( indexes ).data()
 	        var status = data[0][2];
+            var id = data[0][0];
 	        if(status == 'Inactive'){
 	        	$('#delete').text("Activate");
 	        }else{
-	        	$('#delete').text("Delete");
+	        	$('#delete').text("Deactivate");
 	        }
+            $('#detail').data('agent',id);
 	    }
 	});
 
@@ -51,8 +53,8 @@ $(document).ready(function() {
 
 	$('#form').form({
         fields: {
-            username   : 'empty',
-            password   : 'empty'
+            username   : ['minLength[5]', 'empty'],
+            password   : ['minLength[5]', 'empty']
         }
     });
 
@@ -62,4 +64,8 @@ $(document).ready(function() {
     	$("input[name='password']").val($(this).val());
     });
     
+    $('#detail').click(function(){
+        location.assign("/agent_detail/"+$(this).data('agent'));  
+    });
+
 } );

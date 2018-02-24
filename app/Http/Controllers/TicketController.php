@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ticket;
+use App\User;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Input;
@@ -69,6 +70,9 @@ class TicketController extends Controller
                     $query = $query->orWhere('category','like',$value);
                 }
             });
+        }
+        if(!empty($request->date_from) && !empty($request->date_to)){
+            $tickets = $tickets->whereBetween('created_at', [$request->date_from, $request->date_to]);
         }
 
         if($user->type=='customer'){
@@ -207,10 +211,9 @@ class TicketController extends Controller
         //
     }
 
-    public function answer(Request $request)
+    public function answer(User $user)
     {
 
-        $user = Auth::user();
         $customers = DB::table('users')->where('type','=','customer')->get();
         $agents = DB::table('users')->where('type','=','agent')->get();
 

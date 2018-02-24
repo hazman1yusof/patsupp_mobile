@@ -136,10 +136,10 @@
 					<span class="initials">{{strtoupper($postedBy[0])}}</span>
 				</div>
 				<div class="content" style="margin-left: 0.5em;">
-					Posted By @if($message->message_type != 'customer'){!!'<a>Agent</a>'!!}@endif 
-					@if($message->updflg)
-						<span style="color: red;opacity: 0.5">*Edited Message</span>
-					@endif
+					Posted By 
+					@if($message->message_type != 'customer'){!!'<a>Agent</a>'!!}@endif 
+					@if($message->updflg)<span style="color: red;opacity: 0.5">*Edited Message</span>@endif
+					@if($message->message_type == 'remark'){!!'<a>as Remark</a>'!!}@endif
 					<span class="sub header">{{$postedBy}}</span>
 				</div>
   				<div class="ui right floated" >
@@ -150,7 +150,7 @@
   				</div>
 			</h5>
 		</div>
-		<div class="ui clearing @if($message->message_type == 'customer'){{'teal'}}@elseif($message->message_type == 'agent'){{'orange'}}@else{{'red tertiary inverted'}}@endif padded segment">
+		<div class="ui clearing @if($message->message_type == 'customer'){{'teal'}}@elseif($message->message_type == 'agent'){{'orange'}}@else{{'yellow tertiary inverted'}}@endif padded segment" style="color: black !important">
 
 			<form method="POST" class="ui form" id="messageForm" action="/message/{{$message->id}}">
 				{{csrf_field()}}
