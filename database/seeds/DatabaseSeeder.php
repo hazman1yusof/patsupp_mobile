@@ -11,11 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 35)->create();
+        factory(App\User::class, 1)->create();
 
-        factory(App\ticket::class, 100)->create()->each(function ($ticket) {
-            $ticket->messages()->saveMany(factory(App\message::class,5)->make());
-        });
+        // factory(App\ticket::class, 100)->create()->each(function ($ticket) {
+        //     $ticket->messages()->saveMany(factory(App\message::class,5)->make());
+        // });
 
     }
 }
