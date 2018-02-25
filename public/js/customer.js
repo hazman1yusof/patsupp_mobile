@@ -1,11 +1,15 @@
 $(document).ready(function() {
+
     var table = $('#example').DataTable({
     	select: 'single', "order": [[ 0, 'desc' ]],
     	"createdRow": function( row, data, dataIndex){
             if( data[2] ==  'Inactive'){
                 $(row).addClass('negative');
             }
-        }
+        },
+        "initComplete": function(settings, json) {
+            $('body').show();
+        } 
     });
 
     table.on( 'select', function ( e, dt, type, indexes ) {
@@ -70,5 +74,4 @@ $(document).ready(function() {
     $("#form input[name='username']").blur(function(){
     	$("input[name='password']").val($(this).val());
     });
-    
 } );
