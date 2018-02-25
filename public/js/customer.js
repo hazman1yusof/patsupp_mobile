@@ -55,9 +55,6 @@ $(document).ready(function() {
         username   : ['minLength[5]', 'empty'],
         password   : ['minLength[5]', 'empty'],
         email   : ['email', 'empty']
-      },
-      onSuccess : function(event, fields){
-        $('#content') .dimmer('show');
       }
     });
 
@@ -65,9 +62,6 @@ $(document).ready(function() {
       fields: {
         username   : ['minLength[5]', 'empty'],
         email   : ['email', 'empty']
-      },
-      onSuccess : function(event, fields){
-        $('#content') .dimmer('show');
       }
     });
 

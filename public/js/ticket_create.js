@@ -26,9 +26,6 @@ $(document).ready(function() {
         assign_to   : 'empty',
         created_by : 'empty',
         report_by : 'empty',
-      },
-      onSuccess : function(event, fields){
-        $('#content') .dimmer('show');
       }
     });
 });

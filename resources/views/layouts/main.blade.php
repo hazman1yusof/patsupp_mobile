@@ -20,19 +20,17 @@
     </head>
     <body>
         @include('layouts.navs')
-
-        <div class="pusher container" id="content">
+        <div class="pusher container page dimmer" id="content">
             @yield('content')
-            <div class="ui dimmer">
-                <div class="content">
-                <h2 class="ui inverted icon header">
-                    <i class="notched circle loading icon"></i>
-                    Processing.. please wait
-                </h2>
-                </div>
+        </div>
+        <div class="ui dimmer">
+            <div class="content">
+            <h2 class="ui inverted icon header">
+                <i class="notched circle loading icon"></i>
+                Processing.. please wait
+            </h2>
             </div>
         </div>
-
     </body>  
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>

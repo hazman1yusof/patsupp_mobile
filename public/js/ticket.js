@@ -130,7 +130,7 @@ $(document).ready(function() {
         message : ['empty']
       },
       onSuccess : function(event, fields){
-		$('#content') .dimmer('show');
+		$('body') .dimmer('show');
       }
     });
 

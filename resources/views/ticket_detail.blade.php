@@ -170,7 +170,7 @@
 
 @endforeach
 
-	<form method="POST" class="ui form" id="messageForm" action="/message">
+	<form method="POST" class="ui form" id="messageForm" action="/message" id="submit_form">
 		{{csrf_field()}}
         <div class="ui error message"></div>
 		<input type="hidden" name="status" value="normal">
