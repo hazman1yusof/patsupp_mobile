@@ -1,22 +1,5 @@
 $(document).ready(function() {
-	$('#summernote').summernote({
-		placeholder: 'Type Message Here..',
-		tabsize: 2,
-		height: 300,
-		toolbar: [
-		    // [groupName, [list of button]]
-		    ['style', ['bold', 'italic', 'underline', 'clear']],
-		    ['font', ['strikethrough', 'superscript', 'subscript']],
-		    ['fontsize', ['fontsize']],
-		    ['color', ['color']],
-		    ['para', ['ul', 'ol', 'paragraph']],
-		    ['height', ['height']],
-		    ['undo'],['redo'],['fullscreen']
-		  ]
-	});
-
-	$('.ui.checkbox').checkbox();
-
+	///////ni suma filter part////////
 	if(location.search.substr(1) != "" && location.search.substr(1).search("page") != 0){
 		$('#for_status, #for_priority, #for_category, #for_assignto, #for_reportby, #for_paginate').dropdown({});
 
@@ -48,6 +31,8 @@ $(document).ready(function() {
     		set_filter_toggle_flag('off');
     	}else if(filter_flag == "off"){
 			$('#filterForm').hide();
+    	}else if(filter_flag == "on"){
+			$('#filterForm').show();
     	}
     }
 
@@ -59,6 +44,23 @@ $(document).ready(function() {
 			localStorage.setItem("my_filter_flag",flag);
     	}
     }
+    /////////////////////////
+
+	$('#summernote').summernote({
+		placeholder: 'Type Message Here..',
+		tabsize: 2,
+		height: 300,
+		toolbar: [
+		    // [groupName, [list of button]]
+		    ['style', ['bold', 'italic', 'underline', 'clear']],
+		    ['font', ['strikethrough', 'superscript', 'subscript']],
+		    ['fontsize', ['fontsize']],
+		    ['color', ['color']],
+		    ['para', ['ul', 'ol', 'paragraph']],
+		    ['height', ['height']],
+		    ['undo'],['redo'],['fullscreen']
+		  ]
+	});
 
     $('#edit_form_segment').hide();
     $('#edit_form_toggle').click(function(){
@@ -69,8 +71,7 @@ $(document).ready(function() {
 		location.assign("/ticket/"+$(this).data('id'));
 	});
 
-	$('#submitMessage')
-		.dropdown({
+	$('#submitMessage').dropdown({
 		action: 'combo',
 		onChange: function(value, text, $selectedItem) {
 			$("#messageForm [name='status']").val(value);
@@ -82,6 +83,7 @@ $(document).ready(function() {
 		$('html, body').scrollTop( $(document).height() );
 	});
 
+	///////////////edit message/////////
 	var current_edit_id=null;
 	$('button[edit]').click(function(){
 		if(current_edit_id!=null){
@@ -117,9 +119,20 @@ $(document).ready(function() {
 		current_edit_id=null;
 	});
 
+
 	$('button[save]').click(function(){
 		$(current_edit_id+'_text').val($(current_edit_id).summernote('code'));
 	});
+	/////////////////////////////////
+
+	$('.ui.form').form({
+      fields: {
+        message : ['empty']
+      },
+      onSuccess : function(event, fields){
+		$('#content') .dimmer('show');
+      }
+    });
 
 	function checkToScrollDown(){
 		var target = $('#scroll_btm').val();
@@ -132,5 +145,6 @@ $(document).ready(function() {
 	checkToScrollDown();
 
 	$('.ui.checkbox.column').popup();
+	$('.ui.checkbox').checkbox();
 
 });

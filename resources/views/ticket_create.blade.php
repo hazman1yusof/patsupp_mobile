@@ -1,8 +1,9 @@
 @extends('layouts.main')
 
 @section('content')
+	<h1>Create Ticket</h1>
 	<form class="ui form" method="POST" action="/ticket/create">
-		<div class="ui segment clearing">
+		<div class="ui segment">
             <div class="ui error message"></div>
 			{{csrf_field()}}
 			<div class="field">
@@ -83,7 +84,7 @@
 			</div>
 			@endif
 
-			<button class="ui teal button right floated"> Create Ticket </button>
+			<button class="ui teal button"> Create Ticket </button>
 		</div>
 	</form>
 

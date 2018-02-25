@@ -17,8 +17,7 @@ $(document).ready(function() {
         ]
     });
 
-    $('.ui.form')
-    .form({
+    $('.ui.form').form({
       fields: {
         title     : ['minLength[5]', 'empty'],
         category   : 'empty',
@@ -27,6 +26,9 @@ $(document).ready(function() {
         assign_to   : 'empty',
         created_by : 'empty',
         report_by : 'empty',
+      },
+      onSuccess : function(event, fields){
+        $('#content') .dimmer('show');
       }
     });
 });

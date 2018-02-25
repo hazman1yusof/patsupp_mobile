@@ -11,7 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 1)->create();
+
+        if (!App\User::find(1)){
+            factory(App\User::class, 1)->create();
+        }
 
         // factory(App\ticket::class, 100)->create()->each(function ($ticket) {
         //     $ticket->messages()->saveMany(factory(App\message::class,5)->make());

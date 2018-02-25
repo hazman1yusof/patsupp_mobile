@@ -103,6 +103,7 @@ class CustomerController extends Controller
         ////validate message
         $validatedData = $request->validate([
             'password' => $pass_check,
+            'email' => 'email',
             'company' => '',
             'note' => '',
         ]);
@@ -111,6 +112,7 @@ class CustomerController extends Controller
             $user->password = bcrypt($request->password);
         }
 
+        $user->email = $request->email;
         $user->company = $request->company;
         $user->note = $request->note;
         $user->save();

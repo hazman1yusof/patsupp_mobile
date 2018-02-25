@@ -31,9 +31,9 @@ $(document).ready(function() {
     	let tabledata = table.rows( { selected: true } ).data()[0];
 
     	$("#form_edit input[name='username']").val(tabledata[1]);
-    	$("#form_edit input[name='email']").val(tabledata[3]);
-    	$("#form_edit input[name='company']").val(tabledata[4]);
-    	$("#form_edit textarea[name='note']").val(tabledata[5]);
+    	$("#form_edit input[name='email']").val(tabledata[4]);
+    	$("#form_edit input[name='company']").val(tabledata[5]);
+    	$("#form_edit textarea[name='note']").val(tabledata[6]);
 
     	$("#form_edit").attr('action',"/customer/"+tabledata[0]);
     });
@@ -50,11 +50,24 @@ $(document).ready(function() {
     	}
     });
 
-	$('#form')
-    .form({
+	$('#form').form({
       fields: {
         username   : ['minLength[5]', 'empty'],
-        password   : ['minLength[5]', 'empty']
+        password   : ['minLength[5]', 'empty'],
+        email   : ['email', 'empty']
+      },
+      onSuccess : function(event, fields){
+        $('#content') .dimmer('show');
+      }
+    });
+
+    $('#form_edit').form({
+      fields: {
+        username   : ['minLength[5]', 'empty'],
+        email   : ['email', 'empty']
+      },
+      onSuccess : function(event, fields){
+        $('#content') .dimmer('show');
       }
     });
 

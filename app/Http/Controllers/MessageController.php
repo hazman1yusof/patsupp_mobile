@@ -50,7 +50,7 @@ class MessageController extends Controller
         ////validate message
         $validatedData = $request->validate([
             'ticket_id' => 'required',
-            'message' => 'required|min:15',
+            'message' => 'required',
         ]);
 
         ////check message type

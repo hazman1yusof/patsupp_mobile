@@ -35,6 +35,7 @@
 
 		<form method="POST" class="ui form" id="messageForm" action="/ticket/{{$ticket->id}}">
 			{{csrf_field()}}
+
     		<input type="hidden" name="_method" value="PUT">
     		<input type="hidden" name="text" id="ticket_{{$ticket->id}}_text">
 			<div id="ticket_{{$ticket->id}}">
@@ -171,6 +172,7 @@
 
 	<form method="POST" class="ui form" id="messageForm" action="/message">
 		{{csrf_field()}}
+        <div class="ui error message"></div>
 		<input type="hidden" name="status" value="normal">
 		<input type="hidden" name="ticket_id" value="{{$ticket->id}}">
 		<div class="ui segments clearing" id="newMessage">
@@ -181,7 +183,7 @@
 				<div class="fields">
 					<div class="field">
 						<div class="ui teal buttons">
-							<button class="ui button" type="submit">Submit Message</button>
+							<button class="ui button" type="submit" id="submit_message">Submit Message</button>
 							<div class="ui combo top right pointing dropdown icon button" id="submitMessage">
 								<i class="dropdown icon"></i>
 								<div class="menu">

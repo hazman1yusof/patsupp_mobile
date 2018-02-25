@@ -5,7 +5,7 @@
         <button type="button" id="add" class="ui button">Add</button>
         <button type="button" id="edit" class="ui button">Edit</button>
         <button type="button" id="delete" class="ui button">Deactivate</button>
-        <button type="button" id="detail" class="ui button" data-agent="1">Detail</button>
+        <button type="button" id="detail" class="ui button" data-agent="1" style="margin-top: 10px" >Detail</button>
     </div>
 	<table id="example" class="ui celled table" cellspacing="0" width="100%">
         <thead>
@@ -82,6 +82,7 @@
         </div>
         <div class="content">
             <form class="ui form" method="POST" action="/agent/" id="form_edit">
+                <div class="ui error message"></div>
                 <input type="hidden" name="_method" value="PUT">
                 {{csrf_field()}}
                 <div class="field">

@@ -79,7 +79,7 @@ class AgentController extends Controller
 
         $open = ticket::where("assign_to","=",$user->id)->whereIn('status', ['Open','Answered'])->count();
 
-        $answer = message::where("user_id","=",$user->id)->distinct('ticket_id')->count();
+        $answer = message::where("user_id","=",$user->id)->distinct('ticket_id')->count('ticket_id');
 
         $created = ticket::where("created_by","=",$user->username)->count();
 
@@ -113,6 +113,7 @@ class AgentController extends Controller
         ////validate message
         $validatedData = $request->validate([
             'password' => $pass_check,
+            'email' => 'email',
             'note' => '',
         ]);
 
@@ -120,6 +121,7 @@ class AgentController extends Controller
             $user->password = bcrypt($request->password);
         }
 
+        $user->email = $request->email;
         $user->note = $request->note;
         $user->save();
 

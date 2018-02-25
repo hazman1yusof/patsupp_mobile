@@ -2,9 +2,9 @@
 	$display = (Auth::user()->type=='customer') ? "none":"";
 ?>
 
-<div class="ui teal segment" style="padding-bottom: 50px;">
+<div class="ui teal segment" style="padding-bottom: 30px;">
 	<a class="ui teal top left attached label" id="toggleFilter">Toggle Filter Visibility</a>
-  	<form method="GET" class="ui form" id="filterForm" action="/ticket" name="ticketSearch">
+  	<form method="GET" class="ui form" id="filterForm" action="/ticket" name="ticketSearch" style="display: none;">
 		<h4 class="ui dividing header">Filter Ticket</h4>
 		<div class="field">
 			<div class="two fields">
@@ -107,12 +107,9 @@
 			</div>
 		</div>
 
-		<button class="ui grey button right floated" type="button" id="reset"> Reset </button>
-		<button class="ui teal button right floated"> Filter Ticket </button>
 
-		<label class="ui right floated sub header" style="padding-top: 10px"> Entries</label>
-
-		<div class="ui normal selection dropdown right floated" id="for_paginate">
+		<label class="ui sub header" style="padding-top: 10px">Show </label>
+		<div class="ui normal selection dropdown" id="for_paginate">
 			<input type="hidden" name="paginate">
 			<i class="dropdown icon"></i>
 			<div class="text">
@@ -125,9 +122,10 @@
 				<div class="item" data-value="100">100</div>
 			</div>
 		</div>
+		<label class="ui sub header" style="padding-top: 10px"> Entries</label>
 
-		<label class="ui right floated sub header" style="padding-top: 10px">Show </label>
-
+		<button class="ui teal button " style="margin-left: 10px;margin-top: 10px"> Filter Ticket </button>
+		<button class="ui grey button " type="button" id="reset"> Reset </button>
 
   	</form>
 </div>

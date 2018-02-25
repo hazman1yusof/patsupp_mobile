@@ -54,9 +54,24 @@ $(document).ready(function() {
 	$('#form').form({
         fields: {
             username   : ['minLength[5]', 'empty'],
-            password   : ['minLength[5]', 'empty']
+            password   : ['minLength[5]', 'empty'],
+            email   : ['email', 'empty']
+        },
+        onSuccess : function(event, fields){
+            $('#content') .dimmer('show');
         }
     });
+
+    $('#form_edit').form({
+        fields: {
+            username   : ['minLength[5]', 'empty'],
+            email   : ['email', 'empty']
+        },
+        onSuccess : function(event, fields){
+            $('#content') .dimmer('show');
+        }
+    });
+
 
     $("input[name='password']").popup();
 

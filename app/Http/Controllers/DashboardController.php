@@ -29,7 +29,7 @@ class DashboardController extends Controller
 
             $open = ticket::where("assign_to","=",$user->id)->whereIn('status', ['Open','Answered'])->count();
 
-            $answer = message::where("user_id","=",$user->id)->distinct('ticket_id')->count();
+            $answer = message::where("user_id","=",$user->id)->distinct('ticket_id')->count('ticket_id');
 
             return view('dashboard',compact('user','assign','attention','answer','open','created'));
 
