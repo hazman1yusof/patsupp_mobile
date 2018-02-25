@@ -123,7 +123,7 @@ class TicketController extends Controller
             'title' => 'required',
             'category' => 'required',
             'priority' => 'required',
-            'description' => 'required|min:15',
+            'description' => 'required|min:5',
             'assign_to' => 'required',
             'created_by' => 'required',
             'report_by' => $report_validate

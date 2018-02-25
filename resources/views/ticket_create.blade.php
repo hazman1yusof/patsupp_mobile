@@ -69,19 +69,19 @@
 			</div>
 
 			@if(Auth::user()->type == 'agent')
-			<div class="field">
-				<label>Report By</label>
-				<div class="ui fluid search normal selection dropdown" id="for_reportby">
-					<input type="hidden" name="report_by">
-					<i class="dropdown icon"></i>
-					<div class="default text">Report By</div>
-					<div class="menu">
-						@foreach ($customers as $customer)
-							<div class="item" data-value="{{$customer->id}}">{{$customer->username}}</div>
-						@endforeach
+				<div class="field">
+					<label>Report By</label>
+					<div class="ui fluid search normal selection dropdown" id="for_reportby">
+						<input type="hidden" name="report_by">
+						<i class="dropdown icon"></i>
+						<div class="default text">Report By</div>
+						<div class="menu">
+							@foreach ($customers as $customer)
+								<div class="item" data-value="{{$customer->id}}">{{$customer->username}}</div>
+							@endforeach
+						</div>
 					</div>
 				</div>
-			</div>
 			@endif
 
 			<button class="ui teal button"> Create Ticket </button>
