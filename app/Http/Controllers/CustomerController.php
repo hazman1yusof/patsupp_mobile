@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use DB;
 
 class CustomerController extends Controller
 {
@@ -18,9 +19,10 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        
+        $agents = DB::table('users')->where('type','=','agent')->get();
         $customers = User::where('type','=','customer')->orderBy('id', 'desc')->get();
-        return view('customer',compact('customers'));
+        return view('customer',compact('customers','agents'));
     }
 
     /**

@@ -1,5 +1,12 @@
 @extends('layouts.main')
 
+
+@section('_style')
+		.description{
+			 text-align:center;
+		}
+@endsection
+
 @section('content')
 <div class="ui cards">
 		<h1 class="ui center aligned icon header">Welcome back {{Auth::user()->username}}</h1>

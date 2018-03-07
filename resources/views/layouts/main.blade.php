@@ -19,7 +19,9 @@
 
     </head>
     <body>
-        @include('layouts.navs')
+        @if(!Request::is('login'))
+            @include('layouts.navs')
+        @endif
         <div class="pusher container" id="content">
             @yield('content')
         </div>

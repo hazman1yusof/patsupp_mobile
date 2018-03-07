@@ -11,7 +11,7 @@
         <thead>
             <tr>
                 <th>id</th>
-                <th>Username</th>
+                <th>Agent Name</th>
                 <th>Status</th>
                 <th>Type</th>
                 <th>Email</th>

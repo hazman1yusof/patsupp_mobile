@@ -13,7 +13,7 @@
 						<input placeholder="Username" type="text" name="username">
 					</div>
 					<div class="field">
-						<label>Passwrod</label>
+						<label>Password</label>
 						<input placeholder="Password" type="password" name="password">
 					</div>
 					<div class="ui stackable two column grid">

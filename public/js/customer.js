@@ -1,7 +1,17 @@
 $(document).ready(function() {
 
     var table = $('#example').DataTable({
-    	select: 'single', "order": [[ 0, 'desc' ]],
+        "columns": [
+            { "name": "id" },
+            { "name": "username" },
+            { "name": "status" },
+            { "name": "type" },
+            { "name": "email" },
+            { "name": "company" },
+            { "name": "note", "visible": false }
+        ],
+    	"select": 'single', 
+        "order": [[ 0, 'desc' ]],
     	"createdRow": function( row, data, dataIndex){
             if( data[2] ==  'Inactive'){
                 $(row).addClass('negative');

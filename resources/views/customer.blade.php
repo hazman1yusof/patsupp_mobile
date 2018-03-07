@@ -11,7 +11,7 @@
         <thead>
             <tr>
                 <th>id</th>
-                <th>Username</th>
+                <th>Customer Name</th>
                 <th>Status</th>
                 <th>Type</th>
                 <th>Email</th>
@@ -54,26 +54,92 @@
             <form class="ui form" method="POST" action="/customer" id="form">
                 <div class="ui error message"></div>
                 {{csrf_field()}}
-                <div class="field">
-                    <label>Username</label>
-                    <input type="text" name="username" placeholder="Username">
+
+                <div class="two fields">
+                    <div class="field">
+                        <label>Username</label>
+                        <input type="text" name="username" placeholder="Log In Name">
+                    </div>
+
+                    <div class="field">
+                        <label>Customer Name</label>
+                        <input type="text" name="contact " placeholder="Contact Name">
+                    </div>
                 </div>
+
                 <div class="field">
                     <label>Password</label>
                     <input type="text" name="password" placeholder="Password" data-content="By default password is the same as username, users are expected to change their password after login">
                 </div>
+
                 <div class="field">
                     <label>Email</label>
                     <input type="text" name="email" placeholder="Email">
                 </div>
-                <div class="field">
-                    <label>Company</label>
-                    <input type="text" name="company" placeholder="Company">
+
+                <div class="fields">
+                    <div class="twelve wide field">
+                        <label>Billing Address</label>
+                        <textarea placeholder="Address" rows="4" name="address"></textarea>
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Postcode</label>
+                        <input type="text" name="postcode" placeholder="Postcode">
+                    </div>
                 </div>
+
+                <div class="two fields">
+
+                    <div class="field">
+                        <label>City</label>
+                        <input type="text" name="city" placeholder="City">
+                    </div>
+
+                    <div class="field">
+                        <label>Province</label>
+                        <select class="ui fluid dropdown" name="province" id="province">
+                            <option value="1" selected="selected">Wp Kuala Lumpur</option>
+                            <option value="2">Johor</option>
+                            <option value="3">Kedah</option>
+                            <option value="4">Kelantan</option>
+                            <option value="5">Melaka</option>
+                            <option value="6">Negeri Sembilan</option>
+                            <option value="7">Pahang</option>
+                            <option value="8">Penang</option>
+                            <option value="9">Perak</option>
+                            <option value="10">Perlis</option>
+                            <option value="11">Sabah</option>
+                            <option value="12">Sarawak</option>
+                            <option value="13">Selangor</option>
+                            <option value="14">Terengganu</option>
+                            <option value="15">Wp Labuan</option>
+                            <option value="16">Wp Putrajaya</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="two fields">
+                    <div class="field">
+                        <label>Mobile Number</label>
+                        <div class="ui left labeled input">
+                          <div class="ui basic label">+60</div>
+                          <input type="text" name="mobile_nm" placeholder="Phone Number">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Company</label>
+                        <input type="text" name="company" placeholder="Company">
+                    </div>
+                </div>
+
                 <div class="field">
                     <label>Note</label>
                     <textarea name="note" placeholder="Note"></textarea>
                 </div>
+
             </form>
         </div>
         <div class="actions">
@@ -82,6 +148,7 @@
         </div>
     </div>
 
+                    
     <div class="ui modal" id="edit_modal">
         <div class="header">
             Edit Customer
@@ -91,26 +158,92 @@
                 <div class="ui error message"></div>
                 <input type="hidden" name="_method" value="PUT">
                 {{csrf_field()}}
-                <div class="field">
-                    <label>Username</label>
-                    <input type="text" name="username" placeholder="Username" disabled>
+                
+                <div class="two fields">
+                    <div class="field">
+                        <label>Customer Name</label>
+                        <input type="text" name="username" placeholder="Log In Name">
+                    </div>
+
+                    <div class="field">
+                        <label>Contact Name</label>
+                        <input type="text" name="contact " placeholder="Contact Name">
+                    </div>
                 </div>
+
                 <div class="field">
                     <label>Password</label>
                     <input type="text" name="password" placeholder="Password" data-content="Password are hash inside the database, old password cant be retrive, it can only be edit to a new one, leave password blank if you dont want to edit old password">
                 </div>
+
                 <div class="field">
                     <label>Email</label>
                     <input type="text" name="email" placeholder="Email">
                 </div>
-                <div class="field">
-                    <label>Company</label>
-                    <input type="text" name="company" placeholder="Company">
+
+                <div class="fields">
+                    <div class="twelve wide field">
+                        <label>Billing Address</label>
+                        <textarea placeholder="Address" rows="4" name="address"></textarea>
+                    </div>
+
+                    <div class="four wide field">
+                        <label>Postcode</label>
+                        <input type="text" name="postcode" placeholder="Postcode">
+                    </div>
                 </div>
+
+                <div class="two fields">
+
+                    <div class="field">
+                        <label>City</label>
+                        <input type="text" name="city" placeholder="City">
+                    </div>
+
+                    <div class="field">
+                        <label>Province</label>
+                        <select class="ui fluid dropdown" name="province" id="province">
+                            <option value="1" selected="selected">Wp Kuala Lumpur</option>
+                            <option value="2">Johor</option>
+                            <option value="3">Kedah</option>
+                            <option value="4">Kelantan</option>
+                            <option value="5">Melaka</option>
+                            <option value="6">Negeri Sembilan</option>
+                            <option value="7">Pahang</option>
+                            <option value="8">Penang</option>
+                            <option value="9">Perak</option>
+                            <option value="10">Perlis</option>
+                            <option value="11">Sabah</option>
+                            <option value="12">Sarawak</option>
+                            <option value="13">Selangor</option>
+                            <option value="14">Terengganu</option>
+                            <option value="15">Wp Labuan</option>
+                            <option value="16">Wp Putrajaya</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="two fields">
+                    <div class="field">
+                        <label>Mobile Number</label>
+                        <div class="ui left labeled input">
+                          <div class="ui basic label">+60</div>
+                          <input type="text" name="mobile_nm" placeholder="Phone Number">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Company</label>
+                        <input type="text" name="company" placeholder="Company">
+                    </div>
+                </div>
+
                 <div class="field">
                     <label>Note</label>
                     <textarea name="note" placeholder="Note"></textarea>
                 </div>
+
             </form>
         </div>
         <div class="actions">

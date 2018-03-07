@@ -13,7 +13,7 @@
         <a class="item {{(Request::is('agent') ? 'active' : '')}}" href="\agent">Agent</a>
         <a class="item {{(Request::is('backup') ? 'active' : '')}}" href="\backup">Backup & Restore</a>
     @endif
-    <a class="item" href="\settings\change_password">Change Password</a>
+    <!-- <a class="item" href="\settings\change_password">Change Password</a> -->
     <a class="item" href="\logout">Log Out</a>
 </div>
 
@@ -25,6 +25,6 @@
         <a class="item {{(Request::is('agent') ? 'active' : '')}}" data-content="Agent" href="\agent"><i class="spy inverted big link icon"></i></a>
         <a class="item {{(Request::is('backup') ? 'active' : '')}}" data-content="Backup & Restore" href="\backup"><i class="server inverted big link icon"></i></a>
     @endif
-    <a class="item {{(Request::is('settings/change_password') ? 'active' : '')}}" data-content="Change Password" href="\settings\change_password"><i class="settings inverted big link icon"></i></a>
+    <!-- <a class="item {{(Request::is('settings/change_password') ? 'active' : '')}}" data-content="Change Password" href="\settings\change_password"><i class="settings inverted big link icon"></i></a> -->
     <a class="item {{(Request::is('login') ? 'active' : '')}}" data-content="LogOut" href="\logout"><i class="plug inverted big icon"></i></a>
 </div>
