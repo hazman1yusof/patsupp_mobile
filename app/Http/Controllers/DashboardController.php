@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ticket;
 use App\message;
-use App\User;
 use Auth;
 
 class DashboardController extends Controller
@@ -21,32 +20,18 @@ class DashboardController extends Controller
 
         if($user->type == 'agent'){
 
-            $open = ticket::where("assign_to","=",$user->id)
-                    ->where("status","=","Open")
-                    ->count();
+            $assign = ticket::where("assign_to","=",$user->id)->count();
 
-            $answered = ticket::where("assign_to","=",$user->id)
-                ->where("status","=","Answered")
+            $attention = ticket::where("assign_to","=",$user->id)
+                ->where("priority","=","Urgent")
+                ->whereIn('status', ['Open','Answered'])
                 ->count();
 
-            $open_all = ticket::where("status","=","Open")
-                    ->count();
+            $open = ticket::where("assign_to","=",$user->id)->whereIn('status', ['Open','Answered'])->count();
 
-            $answered_all = ticket::where("status","=","Answered")
-                    ->count();
+            $answer = message::where("user_id","=",$user->id)->distinct('ticket_id')->count('ticket_id');
 
-            $answered2 = message::where("user_id","=",$user->id)->distinct('ticket_id')->count('ticket_id');
-
-            $user_me = User::where('type','=','customer')
-                        ->where('status','=','Active')
-                        ->where('agent_id','=',$user->id)
-                        ->count();
-
-            $user_all = User::where('type','=','customer')
-                        ->where('status','=','Active')
-                        ->count();
-
-            return view('dashboard',compact('user','open','answered','open_all','answered_all','answered2','user_me','user_all'));
+            return view('dashboard',compact('user','assign','attention','answer','open','created'));
 
         }else if($user->type == 'customer'){
 

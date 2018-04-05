@@ -1,9 +1,5 @@
 @extends('layouts.main')
 
-@section('body')
-    style="display: none"
-@endsection
-
 @section('content')
 
     <div class="segment" style="margin-bottom: 10px">
@@ -15,18 +11,11 @@
         <thead>
             <tr>
                 <th>id</th>
-                <th>Username</th>
                 <th>Customer Name</th>
                 <th>Status</th>
                 <th>Type</th>
                 <th>Email</th>
-                <th>Agent</th>
                 <th>Company</th>
-                <th>address</th>
-                <th>postcode</th>
-                <th>city</th>
-                <th>province</th>
-                <th>mobile_nm</th>
                 <th>Note</th>
             </tr>
         </thead>
@@ -35,17 +24,10 @@
             <tr>
                 <td>{{$customer->id}}</td>
                 <td>{{$customer->username}}</td>
-                <td>{{$customer->contact}}</td>
                 <td>{{$customer->status}}</td>
                 <td>{{$customer->type}}</td>
                 <td>{{$customer->email}}</td>
-                <td>{{$customer->agent_id}}</td>
                 <td>{{$customer->company}}</td>
-                <td>{{$customer->address}}</td>
-                <td>{{$customer->postcode}}</td>
-                <td>{{$customer->city}}</td>
-                <td>{{$customer->province}}</td>
-                <td>{{$customer->mobile_nm}}</td>
                 <td>{{$customer->note}}</td>
             </tr>
             @endforeach
@@ -81,41 +63,23 @@
 
                     <div class="field">
                         <label>Customer Name</label>
-                        <input type="text" name="contact" placeholder="Contact Name">
+                        <input type="text" name="contact " placeholder="Contact Name">
                     </div>
                 </div>
 
                 <div class="field">
                     <label>Password</label>
-                    <input type="text" name="password" placeholder="Password" data-content="By default password is the same as username">
+                    <input type="text" name="password" placeholder="Password" data-content="By default password is the same as username, users are expected to change their password after login">
                 </div>
 
-                <div class="two fields">
-                    <div class="field">
-                        <label>Email</label>
-                        <input type="text" name="email" placeholder="Email">
-                    </div>
-
-                    <div class="field">
-                        <label>Assign To</label>
-                        <div class="ui fluid multiple search normal selection dropdown" id="for_assignto">
-                            <input type="hidden" name="agent_id">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Assign To</div>
-                            <div class="menu">
-                                @foreach ($agents as $agent)
-                                    <div class="item" data-value="{{$agent->id}}">{{$agent->username}}</div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input type="text" name="email" placeholder="Email">
                 </div>
-
-                <div class="ui horizontal divider">Additional Info</div>
 
                 <div class="fields">
                     <div class="twelve wide field">
-                        <label>Address</label>
+                        <label>Billing Address</label>
                         <textarea placeholder="Address" rows="4" name="address"></textarea>
                     </div>
 
@@ -203,40 +167,18 @@
 
                     <div class="field">
                         <label>Contact Name</label>
-                        <input type="text" name="contact" placeholder="Contact Name">
+                        <input type="text" name="contact " placeholder="Contact Name">
                     </div>
                 </div>
 
                 <div class="field">
                     <label>Password</label>
-                    <div class="inline field">
-                        <div class="ui checkbox" id="cb_password" >
-                            <input type="checkbox" tabindex="0" class="hidden" name="cb_password">
-                            <label>Edit Password?</label>
-                        </div>
-                    </div>
-                    <input type="text" name="password" placeholder="Password" disabled="true" data-content="Password are hash inside the database, old password cant be retrive, it can only be edit to a new one, leave password blank if you dont want to edit old password">
+                    <input type="text" name="password" placeholder="Password" data-content="Password are hash inside the database, old password cant be retrive, it can only be edit to a new one, leave password blank if you dont want to edit old password">
                 </div>
 
-                <div class="two fields">
-                    <div class="field">
-                        <label>Email</label>
-                        <input type="text" name="email" placeholder="Email">
-                    </div>
-
-                    <div class="field">
-                        <label>Assign To</label>
-                        <div class="ui fluid search normal selection dropdown" id="for_agent_id">
-                            <input type="hidden" name="agent_id">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Assign To</div>
-                            <div class="menu">
-                                @foreach ($agents as $agent)
-                                    <div class="item" data-value="{{$agent->id}}">{{$agent->username}}</div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input type="text" name="email" placeholder="Email">
                 </div>
 
                 <div class="fields">

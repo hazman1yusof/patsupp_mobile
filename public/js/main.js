@@ -34,13 +34,4 @@
         }, 900, 'swing');
     });
 
-    $('a[data-content="LogOut"]').on('click', function(e) {
-        e.preventDefault();
-
-        var r = confirm("Are you sure to Log Out?");
-        if (r == true) {
-            window.location.href = "/logout";
-        }
-    });
-
 });

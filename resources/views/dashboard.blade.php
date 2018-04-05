@@ -18,7 +18,23 @@
 	<div class="card">
 		<div class="content">
 			<div class="ui center aligned header">
-				<a class="ui button center" href="/ticket?assign_to={{Auth::id()}}&status=Open">
+				<a class="ui button center" href="/ticket?assign_to={{Auth::id()}}&priority=Urgent&status=Open%2CAnswered">
+					<div class="ui red statistic">
+						<div class="value">
+	      					<i class="ticket icon"></i>{{$attention}}
+						</div>
+						<div class="label">Tickets</div>
+					</div>
+				</a>
+			</div>
+			<div class="description">Urgent ticket need your attention</div>
+		</div>
+	</div>
+
+	<div class="card">
+		<div class="content">
+			<div class="ui center aligned header">
+				<a class="ui button center" href="/ticket?assign_to={{Auth::id()}}&status=Open%2CAnswered">
 					<div class="ui statistic">
 						<div class="value">
 	      					<i class="ticket icon"></i>{{$open}}
@@ -27,55 +43,23 @@
 					</div>
 				</a>
 			</div>
-			<div class="description">Open tickets - need your reply</div>
+			<div class="description">Open and Answered ticket for you</div>
 		</div>
 	</div>
 
 	<div class="card">
 		<div class="content">
 			<div class="ui center aligned header">
-				<a class="ui button center" href="/ticket?assign_to={{Auth::id()}}&status=Answered">
+				<a class="ui button center" href="/ticket?assign_to={{Auth::id()}}">
 					<div class="ui statistic">
 						<div class="value">
-	      					<i class="ticket icon"></i>{{$answered}}
+	      					<i class="ticket icon"></i>{{$assign}}
 						</div>
 						<div class="label">Tickets</div>
 					</div>
 				</a>
 			</div>
-			<div class="description">Answered tickets - waiting reply</div>
-		</div>
-	</div>
-
-	<div class="card">
-		<div class="content">
-			<div class="ui center aligned header">
-				<a class="ui button center" href="/ticket?status=Open">
-					<div class="ui statistic">
-						<div class="value">
-	      					<i class="ticket icon"></i>{{$open_all}}
-						</div>
-						<div class="label">Tickets</div>
-					</div>
-				</a>
-			</div>
-			<div class="description">Open tickets</div>
-		</div>
-	</div>
-
-	<div class="card">
-		<div class="content">
-			<div class="ui center aligned header">
-				<a class="ui button center" href="/ticket?status=Answered">
-					<div class="ui statistic">
-						<div class="value">
-	      					<i class="ticket icon"></i>{{$answered_all}}
-						</div>
-						<div class="label">Tickets</div>
-					</div>
-				</a>
-			</div>
-			<div class="description">Answered tickets</div>
+			<div class="description">Ticket assigned to you</div>
 		</div>
 	</div>
 
@@ -85,7 +69,7 @@
 				<a class="ui button center" href="/ticket/answer/{{$user->id}}">
 					<div class="ui statistic">
 						<div class="value">
-	      					<i class="ticket icon"></i>{{$answered2}}
+	      					<i class="ticket icon"></i>{{$answer}}
 						</div>
 						<div class="label">Tickets</div>
 					</div>
@@ -94,41 +78,6 @@
 			<div class="description">Ticket replied by you</div>
 		</div>
 	</div>
-
-
-	<div class="card">
-		<div class="content">
-			<div class="ui center aligned header">
-				<a class="ui button center" href="/customer?agent_id={{Auth::id()}}&status=Active">
-					<div class="ui statistic">
-						<div class="value">
-	      					<i class="user icon"></i>{{$user_me}}
-						</div>
-						<div class="label">Users</div>
-					</div>
-				</a>
-			</div>
-			<div class="description">No. of your active customers</div>
-		</div>
-	</div>
-
-
-	<div class="card">
-		<div class="content">
-			<div class="ui center aligned header">
-				<a class="ui button center" href="/customer?status=Active">
-					<div class="ui statistic">
-						<div class="value">
-	      					<i class="user icon"></i>{{$user_all}}
-						</div>
-						<div class="label">Users</div>
-					</div>
-				</a>
-			</div>
-			<div class="description">No. of all active customers</div>
-		</div>
-	</div>
-
 
 	@endif
 

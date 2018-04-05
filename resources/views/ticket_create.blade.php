@@ -26,8 +26,6 @@
 						</div>
 					</div>
 				</div>
-
-				@if(Auth::user()->type == 'agent')
 				<div class="field">
 					<label>Ticket Priority</label>
 					<div class="ui fluid search normal selection dropdown" id="for_priority">
@@ -42,7 +40,6 @@
 						</div>
 					</div>
 				</div>
-				@endif
 			</div>
 
 			<div class="field">
@@ -50,9 +47,25 @@
 				<textarea id="summernote" name="description"></textarea>
 			</div>
 
-			<div class="field">
-				<label>Created By</label>
-				<input type="text" name="created_by" placeholder="Created By" value="{{Auth::user()->username}}" readonly>
+
+			<div class="two fields">
+				<div class="field">
+					<label>Assign To</label>
+					<div class="ui fluid search normal selection dropdown" id="for_assignto">
+						<input type="hidden" name="assign_to">
+						<i class="dropdown icon"></i>
+						<div class="default text">Assign To</div>
+						<div class="menu">
+							@foreach ($agents as $agent)
+								<div class="item" data-value="{{$agent->id}}">{{$agent->username}}</div>
+							@endforeach
+						</div>
+					</div>
+				</div>
+				<div class="field">
+					<label>Created By</label>
+					<input type="text" name="created_by" placeholder="Created By" value="{{Auth::user()->username}}" readonly>
+				</div>
 			</div>
 
 			@if(Auth::user()->type == 'agent')

@@ -17,23 +17,11 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         
         $agents = DB::table('users')->where('type','=','agent')->get();
-
-        $customers = User::where('type','=','customer');
-
-        if(!empty($request->agent_id)){
-            $customers = $customers->where('agent_id','=',$request->agent_id);
-        }
-
-        if(!empty($request->status)){
-            $customers = $customers->where('status','=',$request->status);
-        }
-
-        $customers = $customers->orderBy('id', 'desc')->get();
-
+        $customers = User::where('type','=','customer')->orderBy('id', 'desc')->get();
         return view('customer',compact('customers','agents'));
     }
 
@@ -58,7 +46,9 @@ class CustomerController extends Controller
         ////validate message
         $validatedData = $request->validate([
             'username' => 'required|min:5|unique:users',
-            'password' => 'required|min:5'
+            'password' => 'required|min:5',
+            'company' => '',
+            'note' => '',
         ]);
 
         ////create new message
@@ -70,13 +60,6 @@ class CustomerController extends Controller
         $user->password = bcrypt($request->password);
         $user->company = $request->company;
         $user->note = $request->note;
-        $user->contact = $request->contact;
-        $user->address = $request->address;
-        $user->postcode = $request->postcode;
-        $user->city = $request->city;
-        $user->province = $request->province;
-        $user->mobile_nm = $request->mobile_nm;
-        $user->agent_id = $request->agent_id;
         $user->remember_token = str_random(10);
 
         $user->save();
@@ -134,13 +117,6 @@ class CustomerController extends Controller
         $user->email = $request->email;
         $user->company = $request->company;
         $user->note = $request->note;
-        $user->contact = $request->contact;
-        $user->address = $request->address;
-        $user->postcode = $request->postcode;
-        $user->city = $request->city;
-        $user->province = $request->province;
-        $user->mobile_nm = $request->mobile_nm;
-        $user->agent_id = $request->agent_id;
         $user->save();
 
         return redirect()->back();

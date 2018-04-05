@@ -2,17 +2,16 @@
 	$display = (Auth::user()->type=='customer') ? "none":"";
 ?>
 
-<div class="ui teal segment">
-	<a class="ui teal bottom right attached label" id="toggleFilter">Advanced Search</a>
-  	<form method="GET" class="ui form" id="filterForm" action="/ticket" name="ticketSearch" >
-  		<div class="field">
-			<label>Ticket Title</label>
-			<input type="text" name="title" placeholder="Title" value="@if(!empty(Request::input('title'))){{Request::input('title')}}@endif">
-		</div>
-		<div id="toggle_adv" style="display: none;">
-		<h4 class="ui dividing header">Advanced Search</h4>
+<div class="ui teal segment" style="padding-bottom: 30px;">
+	<a class="ui teal top left attached label" id="toggleFilter">Toggle Filter Visibility</a>
+  	<form method="GET" class="ui form" id="filterForm" action="/ticket" name="ticketSearch" style="display: none;">
+		<h4 class="ui dividing header">Filter Ticket</h4>
 		<div class="field">
 			<div class="two fields">
+				<div class="field">
+					<label>Title</label>
+					<input type="text" name="title" placeholder="Title" value="@if(!empty(Request::input('title'))){{Request::input('title')}}@endif">
+				</div>
 				<div class="field">
 					<label>Assign To</label>
 					<div class="ui fluid multiple search normal selection dropdown" id="for_assignto">
@@ -107,7 +106,7 @@
 				</div>
 			</div>
 		</div>
-		</div>
+
 
 		<label class="ui sub header" style="padding-top: 10px">Show </label>
 		<div class="ui normal selection dropdown" id="for_paginate">
@@ -124,8 +123,9 @@
 			</div>
 		</div>
 		<label class="ui sub header" style="padding-top: 10px"> Entries</label>
-		<button class="ui teal button " style="margin-left: 10px;margin-top: 10px"> Search Ticket </button>
-		<button class="ui grey button " type="button" id="reset"> Reset </button>
-  	</form>
 
+		<button class="ui teal button " style="margin-left: 10px;margin-top: 10px"> Filter Ticket </button>
+		<button class="ui grey button " type="button" id="reset"> Reset </button>
+
+  	</form>
 </div>
