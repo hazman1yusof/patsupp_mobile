@@ -26,5 +26,5 @@
         <a class="item {{(Request::is('backup') ? 'active' : '')}}" data-content="Backup & Restore" href="\backup"><i class="server inverted big link icon"></i></a>
     @endif
     <!-- <a class="item {{(Request::is('settings/change_password') ? 'active' : '')}}" data-content="Change Password" href="\settings\change_password"><i class="settings inverted big link icon"></i></a> -->
-    <a class="item {{(Request::is('login') ? 'active' : '')}}" data-content="LogOut" href="\logout"><i class="plug inverted big icon"></i></a>
+    <a class="item {{(Request::is('login') ? 'active' : '')}}" data-content="LogOut"><i class="plug inverted big icon"></i></a>
 </div>

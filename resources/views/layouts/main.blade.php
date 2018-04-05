@@ -18,7 +18,7 @@
         @yield('css')
 
     </head>
-    <body>
+    <body @yield('body')>
         @if(!Request::is('login'))
             @include('layouts.navs')
         @endif

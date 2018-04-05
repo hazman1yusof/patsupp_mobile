@@ -20,7 +20,7 @@ $(document).ready(function() {
 	});
 
 	$('#toggleFilter').click(function(){
-		$('#filterForm').transition('fade');
+		$('#toggle_adv').transition('fade');
 		set_filter_toggle_flag();
 	});
 
@@ -30,9 +30,9 @@ $(document).ready(function() {
     	if(filter_flag == null){
     		set_filter_toggle_flag('off');
     	}else if(filter_flag == "off"){
-			$('#filterForm').hide();
+			$('#toggle_adv').hide();
     	}else if(filter_flag == "on"){
-			$('#filterForm').show();
+			$('#toggle_adv').show();
     	}
     }
 

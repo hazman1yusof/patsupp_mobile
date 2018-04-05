@@ -4,10 +4,17 @@ $(document).ready(function() {
         "columns": [
             { "name": "id" },
             { "name": "username" },
+            { "name": "contact" },
             { "name": "status" },
             { "name": "type" },
             { "name": "email" },
+            { "name": "agent_id", "visible": false },
             { "name": "company" },
+            { "name": "address", "visible": false },
+            { "name": "postcode", "visible": false },
+            { "name": "city", "visible": false },
+            { "name": "province", "visible": false },
+            { "name": "mobile_nm", "visible": false },
             { "name": "note", "visible": false }
         ],
     	"select": 'single', 
@@ -34,6 +41,16 @@ $(document).ready(function() {
 	    }
 	});
 
+    $('#cb_password').checkbox({
+        onChecked: function() {
+            $("#form_edit input[name='password']").prop( "disabled", false );
+        },
+        onUnchecked: function() {
+            $("#form_edit input[name='password']").val( "" );
+            $("#form_edit input[name='password']").prop( "disabled", true );
+        }
+    });
+
     $('.ui.modal').modal();
 
     $('#add').click(function(){
@@ -41,15 +58,28 @@ $(document).ready(function() {
     });
 
     $('#edit').click(function(){
-    	$('#edit_modal').modal('setting', 'closable', false).modal('show');
-    	let tabledata = table.rows( { selected: true } ).data()[0];
+        if(table.rows( '.selected' ).any()){
 
-    	$("#form_edit input[name='username']").val(tabledata[1]);
-    	$("#form_edit input[name='email']").val(tabledata[4]);
-    	$("#form_edit input[name='company']").val(tabledata[5]);
-    	$("#form_edit textarea[name='note']").val(tabledata[6]);
+            $('#edit_modal').modal('setting', 'closable', false).modal('show');
+            let tabledata = table.rows( { selected: true } ).data()[0];
 
-    	$("#form_edit").attr('action',"/customer/"+tabledata[0]);
+            $("#form_edit input[name='username']").val(tabledata[1]);
+            $("#form_edit input[name='contact']").val(tabledata[2]);
+            $("#form_edit input[name='email']").val(tabledata[5]);
+            $('#for_agent_id').dropdown('set selected', tabledata[6])
+            $("#form_edit input[name='company']").val(tabledata[7]);
+            $("#form_edit textarea[name='address']").val(tabledata[8]);
+            $("#form_edit input[name='postcode']").val(tabledata[9]);
+            $("#form_edit input[name='city']").val(tabledata[10]);
+            $("#form_edit select[name='province']").dropdown('set selected', tabledata[11])
+            $("#form_edit input[name='mobile_nm']").val(tabledata[12]);
+            $("#form_edit textarea[name='note']").val(tabledata[13]);
+
+            $("#form_edit").attr('action',"/customer/"+tabledata[0]);
+
+        }else{
+            alert('please select row');
+        }
     });
 
     $('#delete').click(function(){
@@ -66,9 +96,36 @@ $(document).ready(function() {
 
 	$('#form').form({
       fields: {
-        username   : ['minLength[5]', 'empty'],
-        password   : ['minLength[5]', 'empty'],
-        email   : ['email', 'empty']
+        username: {
+            identifier : 'username',
+            rules: [{type   : 'minLength[5]'}]
+        },
+        password: {
+            identifier : 'password',
+            rules: [{type   : 'minLength[5]'}]
+        },
+        email: {
+            identifier : 'email',
+            rules: [{type   : 'email'}]
+        },
+        agent_id: {
+            identifier : 'agent_id',
+            rules: [{type   : 'empty'}]
+        },
+        postcode: {
+            identifier : 'postcode',
+            optional: true,
+            rules: [{type   : 'integer'}]
+        },
+        mobile_nm: {
+            identifier : 'mobile_nm',
+            optional: true,
+            rules: [{type   : 'integer'}]
+        },
+        agent_id: {
+            identifier : 'agent_id',
+            rules: [{type   : 'empty'}]
+        }
       }
     });
 

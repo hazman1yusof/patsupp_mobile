@@ -124,7 +124,6 @@ class TicketController extends Controller
             'category' => 'required',
             'priority' => 'required',
             'description' => 'required|min:5',
-            'assign_to' => 'required',
             'created_by' => 'required',
             'report_by' => $report_validate
         ]);
@@ -136,7 +135,7 @@ class TicketController extends Controller
         $message->category = $request->category;
         $message->priority = $request->priority;
         $message->description = $request->description;
-        $message->assign_to = $request->assign_to;
+        $message->assign_to = (Auth::user()->type=='customer') ? Auth::user()->agent_id : Auth::id();
         $message->created_by = $request->created_by;
         $message->status = "Open";
         $message->report_by = (Auth::user()->type=='customer') ? Auth::id() : $request->report_by;

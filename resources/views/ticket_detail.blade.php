@@ -58,7 +58,7 @@
 				<div class="four fields">
 					<div class="field">
 						<label>Assign To</label>
-						<div class="ui fluid search normal selection dropdown" id="for_assignto">
+						<div class="ui fluid search normal {{(Auth::user()->type == 'customer') ? 'disabled' : ''}} selection dropdown" id="for_assignto">
 							<input type="hidden" name="assign_to" value="{{$ticket->assign_to}}"}>
 							<i class="dropdown icon"></i>
 							<div class="default text">Assign To</div>
@@ -85,7 +85,7 @@
 					</div>
 					<div class="field">
 						<label>Priority</label>
-						<div class="ui fluid search normal selection dropdown" id="for_priority">
+						<div class="ui fluid search normal selection dropdown {{(Auth::user()->type == 'customer') ? 'disabled' : ''}}" id="for_priority">
 							<input type="hidden" name="priority" value="{{$ticket->priority}}">
 							<i class="dropdown icon"></i>
 							<div class="default text">Priority</div>
