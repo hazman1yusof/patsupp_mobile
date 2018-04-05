@@ -31,7 +31,6 @@ $(document).ready(function() {
     $('#edit').click(function(){
     	$('#edit_modal').modal('setting', 'closable', false).modal('show');
     	let tabledata = table.rows( { selected: true } ).data()[0];
-        console.log(tabledata);
 
     	$("#form_edit input[name='username']").val(tabledata[1]);
     	$("#form_edit input[name='email']").val(tabledata[4]);

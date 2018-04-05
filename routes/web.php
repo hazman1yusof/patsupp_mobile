@@ -66,3 +66,13 @@ Route::get('/ticket', "TicketController@index")->name('ticket');
 Route::post('/ticket', "TicketController@store");
 
 Route::put('/ticket/{ticket}', "TicketController@update");
+
+Route::get('/backup', "BackupController@view");
+
+Route::get('/backup/download', 'backupController@download');
+
+Route::get('/backup/restore', 'backupController@restore');
+
+Route::get('/backup/delete', 'backupController@delete');
+
+Route::get('/backup/create', 'backupController@create');
