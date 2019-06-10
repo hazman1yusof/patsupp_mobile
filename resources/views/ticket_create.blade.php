@@ -1,19 +1,19 @@
 @extends('layouts.main')
 
 @section('content')
-	<h1>Create Ticket</h1>
+	<h1>Post Question</h1>
 	<form class="ui form" method="POST" action="/ticket/create">
 		<div class="ui segment">
             <div class="ui error message"></div>
 			{{csrf_field()}}
 			<div class="field">
-				<label>Ticket Title</label>
+				<label>Title</label>
 				<input type="text" name="title" placeholder="Title">
 			</div>
 
-			<div class="two fields">
+			<div class="two fields" style="display: none">
 				<div class="field">
-					<label>Ticket Category</label>
+					<label>Category</label>
 					<div class="ui fluid search normal selection dropdown" id="for_category">
 						<input type="hidden" name="category">
 						<i class="dropdown icon"></i>
@@ -27,7 +27,7 @@
 					</div>
 				</div>
 				<div class="field">
-					<label>Ticket Priority</label>
+					<label>Priority</label>
 					<div class="ui fluid search normal selection dropdown" id="for_priority">
 						<input type="hidden" name="priority">
 						<i class="dropdown icon"></i>
@@ -43,14 +43,14 @@
 			</div>
 
 			<div class="field">
-				<label>Ticket Body</label>
+				<label>Body</label>
 				<textarea id="summernote" name="description"></textarea>
 			</div>
 
 
 			<div class="two fields">
-				<div class="field">
-					<label>Assign To</label>
+				<div class="field" style="display: none">
+					<label>Assign To Doctor (Optional)</label>
 					<div class="ui fluid search normal selection dropdown" id="for_assignto">
 						<input type="hidden" name="assign_to">
 						<i class="dropdown icon"></i>
@@ -68,23 +68,7 @@
 				</div>
 			</div>
 
-			@if(Auth::user()->type == 'agent')
-				<div class="field">
-					<label>Report By</label>
-					<div class="ui fluid search normal selection dropdown" id="for_reportby">
-						<input type="hidden" name="report_by">
-						<i class="dropdown icon"></i>
-						<div class="default text">Report By</div>
-						<div class="menu">
-							@foreach ($customers as $customer)
-								<div class="item" data-value="{{$customer->id}}">{{$customer->username}}</div>
-							@endforeach
-						</div>
-					</div>
-				</div>
-			@endif
-
-			<button class="ui teal button"> Create Ticket </button>
+			<button class="ui teal button"> Post Question </button>
 		</div>
 	</form>
 

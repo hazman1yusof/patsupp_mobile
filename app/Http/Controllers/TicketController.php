@@ -87,13 +87,15 @@ class TicketController extends Controller
             $paginate = 20;
         }
 
+        $navbar = $this->navbar();
+
         $tickets = $tickets->paginate($paginate);
 
         $tickets->appends(Input::except('page'))->links();
 
         // dd($tickets);
 
-        return view('ticket',compact('tickets','customers','agents'));
+        return view('ticket',compact('tickets','customers','agents','navbar'));
     }
 
     /**
@@ -103,9 +105,11 @@ class TicketController extends Controller
      */
     public function create()
     {   
+        $navbar = $this->navbar();
+
         $customers = DB::table('users')->where('type','=','customer')->get();
         $agents = DB::table('users')->where('type','=','agent')->get();
-        return view('ticket_create',compact('agents','customers'));
+        return view('ticket_create',compact('agents','customers','navbar'));
     }
 
     /**
@@ -121,13 +125,22 @@ class TicketController extends Controller
         ////validate ticket
         $validatedData = $request->validate([
             'title' => 'required',
-            'category' => 'required',
-            'priority' => 'required',
             'description' => 'required|min:5',
-            'assign_to' => 'required',
             'created_by' => 'required',
             'report_by' => $report_validate
         ]);
+
+        if(empty($request->category)){
+            $request->category = 'None';
+        }
+
+        if(empty($request->priority)){
+            $request->priority = 'Low';
+        }
+
+        if(empty($request->assign_to)){
+            $request->assign_to = 'All';
+        }
 
         ////create new ticket
         $message = new ticket;
@@ -158,10 +171,9 @@ class TicketController extends Controller
             return redirect()->back();
         }
 
-        $customers = DB::table('users')->where('type','=','customer')->get();
-        $agents = DB::table('users')->where('type','=','agent')->get();
+        $navbar = $this->navbar();
 
-        return view('ticket_detail',compact('ticket','customers','agents'));
+        return view('ticket_detail',compact('ticket','navbar'));
     }
 
     /**
@@ -217,9 +229,10 @@ class TicketController extends Controller
         $customers = DB::table('users')->where('type','=','customer')->get();
         $agents = DB::table('users')->where('type','=','agent')->get();
 
+        $navbar = $this->navbar();
         $answer = message::where("user_id","=",$user->id)->distinct('ticket_id')->pluck("ticket_id");
         $tickets = ticket::whereIn('id', $answer)->paginate();
 
-        return view('ticket',compact('tickets','customers','agents'));
+        return view('ticket',compact('tickets','customers','agents','navbar'));
     }
 }

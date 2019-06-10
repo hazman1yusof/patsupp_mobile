@@ -7,12 +7,12 @@
 
         <title>Customer Support</title>
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/Semantic_latest/semantic.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/Semantic/semantic.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/Summernote 0.8.9/summernote-lite.css') }}">
 
         <style type="text/css">
-            @yield('_style')
+            @yield('style')
         </style>
 
         @yield('css')
@@ -27,8 +27,9 @@
         </div>
     </body>  
 
+    <script src="{{ asset('assets/moment.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/Semantic_latest/semantic.min.js') }}"></script>
+    <script src="{{ asset('assets/Semantic/semantic.min.js') }}"></script>
     <script src="{{ asset('js/utility.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('assets/velocity.min.js') }}"></script>

@@ -19,7 +19,14 @@
 .ui.sidebar.inverted.vertical.menu {
     padding-top:90px;
 }
-@media (max-width: 768px) {
+.ui.left.fixed.vertical.icon.menu {
+        display: none;
+}
+.container {
+    padding-left: 15px;
+    padding-top: 95px;
+}
+/*@media (max-width: 768px) {
     .ui.left.fixed.vertical.icon.menu {
         display: none;
     }
@@ -34,7 +41,7 @@
     }
     .container {
     }
-}
+}*/
 .avatar-circle {
     width: 40px;
     height: 40px;

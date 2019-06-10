@@ -57,7 +57,7 @@ class AgentController extends Controller
         $user->username = $request->username;
         $user->email = $request->email;
         $user->type = 'agent';
-        $user->password = bcrypt($request->password);
+        $user->password = $request->password;
         $user->company = $request->company;
         $user->note = $request->note;
         $user->remember_token = str_random(10);

@@ -25,23 +25,23 @@ Route::get('/logout','SessionController@destroy');
 
 Route::get('/dashboard', "DashboardController@index")->name('dashboard');
 
-Route::get('/customer', "CustomerController@index");
+Route::get('/patient', "PatientController@index");
 
-Route::post('/customer', "CustomerController@store");
+Route::post('/patient', "PatientController@store");
 
-Route::put('/customer/{user}', "CustomerController@update");
+Route::put('/patient/{user}', "PatientController@update");
 
-Route::delete('/customer/{user}', "CustomerController@destroy");
+Route::delete('/patient/{user}', "PatientController@destroy");
 
-Route::get('/agent', "AgentController@index");
+Route::get('/doctor', "doctorController@index");
 
-Route::post('/agent', "AgentController@store");
+Route::post('/doctor', "doctorController@store");
 
-Route::put('/agent/{user}', "AgentController@update");
+Route::put('/doctor/{user}', "doctorController@update");
 
-Route::delete('/agent/{user}', "AgentController@destroy");
+Route::delete('/doctor/{user}', "doctorController@destroy");
 
-Route::get('/agent_detail/{user}', "AgentController@agent_detail");
+Route::get('/agent_detail/{user}', "doctorController@agent_detail");
 
 Route::get('/settings', "SettingsController@index");
 
@@ -67,12 +67,32 @@ Route::post('/ticket', "TicketController@store");
 
 Route::put('/ticket/{ticket}', "TicketController@update");
 
-Route::get('/backup', "BackupController@view");
+//dari msoftweb
+Route::get('/preview','PreviewController@preview');
+Route::get('/preview/data','PreviewController@previewdata');
 
-Route::get('/backup/download', 'backupController@download');
+Route::get('/upload','PreviewController@upload');
+Route::post('/upload','PreviewController@form');
+Route::get('/upload/data','PreviewController@uploaddata');
 
-Route::get('/backup/restore', 'backupController@restore');
 
-Route::get('/backup/delete', 'backupController@delete');
+Route::get('/download/{folder}/{image_path}','PreviewController@download');
 
-Route::get('/backup/create', 'backupController@create');
+//change carousel image to small thumbnail size
+Route::get('/thumbnail/{folder}/{image_path}','PreviewController@thumbnail');
+
+//appointment
+
+Route::get('/appointment','AppointmentController@show');
+Route::get('/appointment/table','AppointmentController@table');
+Route::post('/appointment/form','AppointmentController@form');
+Route::get('/appointment/getEvent','AppointmentController@getEvent');
+Route::post('/appointment/addEvent','AppointmentController@addEvent');
+Route::post('/appointment/editEvent','AppointmentController@editEvent');
+Route::post('/appointment/delEvent','AppointmentController@delEvent');
+
+//webservice luar
+Route::get('/webservice/patmast','WebserviceController@patmast');
+Route::get('/webservice/episode','WebserviceController@episode');
+
+

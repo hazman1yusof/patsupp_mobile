@@ -8,12 +8,13 @@
 @endsection
 
 @section('content')
+<h1 class="ui center aligned icon header">Welcome back {{Auth::user()->username}}</h1>
+
+<h4 class="ui horizontal divider header">Dashboard List</h4>
+
 <div class="ui cards">
-		<h1 class="ui center aligned icon header">Welcome back {{Auth::user()->username}}</h1>
 
-	<h4 class="ui horizontal divider header">Dashboard List</h4>
-
-	@if(Auth::user()->type == 'agent')
+	@if(Auth::user()->type == 'doctor')
 
 	<div class="card">
 		<div class="content">
@@ -23,11 +24,11 @@
 						<div class="value">
 	      					<i class="ticket icon"></i>{{$attention}}
 						</div>
-						<div class="label">Tickets</div>
+						<div class="label">Question</div>
 					</div>
 				</a>
 			</div>
-			<div class="description">Urgent ticket need your attention</div>
+			<div class="description">Urgent question need your attention</div>
 		</div>
 	</div>
 
@@ -39,11 +40,11 @@
 						<div class="value">
 	      					<i class="ticket icon"></i>{{$open}}
 						</div>
-						<div class="label">Tickets</div>
+						<div class="label">Question</div>
 					</div>
 				</a>
 			</div>
-			<div class="description">Open and Answered ticket for you</div>
+			<div class="description">Open and Answered question for you</div>
 		</div>
 	</div>
 
@@ -55,11 +56,11 @@
 						<div class="value">
 	      					<i class="ticket icon"></i>{{$assign}}
 						</div>
-						<div class="label">Tickets</div>
+						<div class="label">Question</div>
 					</div>
 				</a>
 			</div>
-			<div class="description">Ticket assigned to you</div>
+			<div class="description">Question assigned to you</div>
 		</div>
 	</div>
 
@@ -71,17 +72,17 @@
 						<div class="value">
 	      					<i class="ticket icon"></i>{{$answer}}
 						</div>
-						<div class="label">Tickets</div>
+						<div class="label">Question</div>
 					</div>
 				</a>
 			</div>
-			<div class="description">Ticket replied by you</div>
+			<div class="description">Question replied by you</div>
 		</div>
 	</div>
 
 	@endif
 
-	@if(Auth::user()->type == 'customer')
+	@if(Auth::user()->type == 'patient')
 
 
 	<div class="card">
@@ -92,11 +93,11 @@
 						<div class="value">
 	      					<i class="ticket icon"></i>{{$report_by}}
 						</div>
-						<div class="label">Tickets</div>
+						<div class="label">Question</div>
 					</div>
 				</a>
 			</div>
-			<div class="description">Ticket Created by you</div>
+			<div class="description">Question Created by you</div>
 		</div>
 	</div>
 
@@ -108,11 +109,11 @@
 						<div class="value">
 	      					<i class="ticket icon"></i>{{$answered}}
 						</div>
-						<div class="label">Tickets</div>
+						<div class="label">Question</div>
 					</div>
 				</a>
 			</div>
-			<div class="description">Answered ticket for you</div>
+			<div class="description">Answered Question for you</div>
 		</div>
 	</div>
 
@@ -124,11 +125,11 @@
 						<div class="value">
 	      					<i class="ticket icon"></i>{{$open}}
 						</div>
-						<div class="label">Tickets</div>
+						<div class="label">Question</div>
 					</div>
 				</a>
 			</div>
-			<div class="description">Open ticket</div>
+			<div class="description">Open Question</div>
 		</div>
 	</div>
 
@@ -140,11 +141,11 @@
 						<div class="value">
 	      					<i class="ticket icon"></i>{{$resolved}}
 						</div>
-						<div class="label">Tickets</div>
+						<div class="label">Question</div>
 					</div>
 				</a>
 			</div>
-			<div class="description">Resolved ticket</div>
+			<div class="description">Resolved Question</div>
 		</div>
 	</div>
 

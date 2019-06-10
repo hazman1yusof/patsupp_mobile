@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use DB;
 
-class CustomerController extends Controller
+class DoctorCOntroller extends Controller
 {
     public function __construct()
     {
@@ -19,10 +19,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        
-        $agents = DB::table('users')->where('type','=','agent')->get();
-        $customers = User::where('type','=','customer')->orderBy('id', 'desc')->get();
-        return view('customer',compact('customers','agents'));
+        $doctors = DB::table('users')->where('type','=','doctor')->get();
+        $patients = User::where('type','=','patient')->orderBy('id', 'desc')->get();
+        return view('doctor',compact('doctors','patients'));
     }
 
     /**
@@ -56,8 +55,8 @@ class CustomerController extends Controller
 
         $user->username = $request->username;
         $user->email = $request->email;
-        $user->type = 'customer';
-        $user->password = bcrypt($request->password);
+        $user->type = 'patient';
+        $user->password = $request->password;
         $user->company = $request->company;
         $user->note = $request->note;
         $user->remember_token = str_random(10);

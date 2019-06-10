@@ -20,10 +20,7 @@ $(document).ready(function() {
     $('.ui.form').form({
       fields: {
         title     : ['minLength[5]', 'empty'],
-        category   : 'empty',
-        priority : 'empty',
         description     : ['minLength[5]', 'empty'],
-        assign_to   : 'empty',
         created_by : 'empty',
         report_by : 'empty',
       }

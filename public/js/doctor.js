@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    $("#hiddenload").show();
+
     var table = $('#example').DataTable({
         "columns": [
             { "name": "id" },
@@ -18,7 +20,6 @@ $(document).ready(function() {
             }
         },
         "initComplete": function(settings, json) {
-            $('body').show();
         } 
     });
 

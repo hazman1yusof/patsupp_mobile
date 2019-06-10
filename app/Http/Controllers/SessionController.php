@@ -64,9 +64,9 @@ class SessionController extends Controller
                 return back()->withErrors(['Sorry, your account is inactive, contact admin to activate it again']);
             }
 
-            if (Hash::check($request->password, $user->first()->password)) {
-                Auth::login($user->first(),true);
-                return redirect('/dashboard');
+            if ($request->password == $user->first()->password) {
+                Auth::login($user->first(),$remember);
+                return redirect('/ticket');
             }else{
                 return back()->withErrors(['Try again, Password entered incorrect']);
             }

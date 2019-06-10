@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-
+    <div id="hiddenload" style="display: none">
     <div class="segment" style="margin-bottom: 10px">
         <button type="button" id="add" class="ui button">Add</button>
         <button type="button" id="edit" class="ui button">Edit</button>
@@ -10,8 +10,8 @@
 	<table id="example" class="ui celled table" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th>id</th>
-                <th>Customer Name</th>
+                <th>Id</th>
+                <th>Patient Name</th>
                 <th>Status</th>
                 <th>Type</th>
                 <th>Email</th>
@@ -20,15 +20,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($customers as $customer)
+            @foreach($patients as $patient)
             <tr>
-                <td>{{$customer->id}}</td>
-                <td>{{$customer->username}}</td>
-                <td>{{$customer->status}}</td>
-                <td>{{$customer->type}}</td>
-                <td>{{$customer->email}}</td>
-                <td>{{$customer->company}}</td>
-                <td>{{$customer->note}}</td>
+                <td>{{$patient->id}}</td>
+                <td>{{$patient->username}}</td>
+                <td>{{$patient->status}}</td>
+                <td>{{$patient->type}}</td>
+                <td>{{$patient->email}}</td>
+                <td>{{$patient->company}}</td>
+                <td>{{$patient->note}}</td>
             </tr>
             @endforeach
         </tbody>
@@ -45,13 +45,14 @@
         </div>
     </div>
     @endif
+    </div>
 
     <div class="ui modal" id="add_modal">
         <div class="header">
-            Create New Customer
+            Create New Patient
         </div>
         <div class="content">
-            <form class="ui form" method="POST" action="/customer" id="form">
+            <form class="ui form" method="POST" action="/patient" id="form">
                 <div class="ui error message"></div>
                 {{csrf_field()}}
 
@@ -62,7 +63,7 @@
                     </div>
 
                     <div class="field">
-                        <label>Customer Name</label>
+                        <label>Patient Name</label>
                         <input type="text" name="contact " placeholder="Contact Name">
                     </div>
                 </div>
@@ -151,17 +152,17 @@
                     
     <div class="ui modal" id="edit_modal">
         <div class="header">
-            Edit Customer
+            Edit patient
         </div>
         <div class="content">
-            <form class="ui form" method="POST" action="/customer/" id="form_edit">
+            <form class="ui form" method="POST" action="/patient/" id="form_edit">
                 <div class="ui error message"></div>
                 <input type="hidden" name="_method" value="PUT">
                 {{csrf_field()}}
                 
                 <div class="two fields">
                     <div class="field">
-                        <label>Customer Name</label>
+                        <label>Patient Name</label>
                         <input type="text" name="username" placeholder="Log In Name">
                     </div>
 
@@ -252,7 +253,7 @@
         </div>
     </div>
 
-    <form method="POST" action="/customer/" id="form_delete" >
+    <form method="POST" action="/patient/" id="form_delete" >
         <input type="hidden" name="_method" value="DELETE">
         {{csrf_field()}}
     </form>
@@ -269,7 +270,7 @@
 	<script src="{{ asset('assets/DataTables/datatables.min.js') }}"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.semanticui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
-	<script src="{{ asset('js/customer.js') }}"></script>
+	<script src="{{ asset('js/patient.js') }}"></script>
 @endsection
 
 

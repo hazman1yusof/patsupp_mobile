@@ -4,9 +4,9 @@
 @include('layouts.ticketFilter')	
 
 	<input type="hidden" id="scroll_btm" value="">
-	<a class="positive ui button" href="/ticket/create">Create New Ticket</a>
+	<a class="positive ui button" href="/ticket/create">Ask a Question</a>
 
-	<h4 class="ui horizontal divider header">Ticket List</h4>
+	<h4 class="ui horizontal divider header">Question List</h4>
 	<div class="ui three link stackable cards">
 		@foreach ($tickets as $ticket)
 			<?php
@@ -50,23 +50,16 @@
 			?>
 			<div class="card {{$colorh4}}" data-id="{{$ticket->id}}">
 				<div class="content">
-
-					<div class="ui {{$colorcard}} right ribbon label">{{$ticket->status}} {{$ticket->category}}</div>
 					
-					<div class="header"><span style="font-size: small;">#{{$ticket->id}}.</span> {{$ticket->title}}</div>
-					<div class="meta">Report By: <span class="ui teal sub header">{{DB::table('users')->find($ticket->report_by)->username}}</span></div>
-					<div class="meta">Assign To: <span class="ui orange sub header">{{DB::table('users')->find($ticket->assign_to)->username}}</span></div>
+					<div class="header"><span style="font-size: small;"></span> {{$ticket->title}}</div>
 					<div class="description">
 						{!!str_limit($ticket->description,200,' ...')!!}
 					</div>
 				</div>
 				
 				<div class="extra content">
-					<span class="right floated">
-						<h5 class="ui {{$colorh4}} header" style="opacity: 0.7;">Priority : {{$ticket->priority}}</h5>
-					</span>
 					<span>
-						<i class="comment icon"></i>{{$ticket->messages()->count()}} Messages
+						<i class="comment icon"></i>{{$ticket->messages()->count()}} Conversation
 					</span>
 				</div>
 			</div>

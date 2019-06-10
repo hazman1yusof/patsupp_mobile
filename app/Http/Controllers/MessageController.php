@@ -82,11 +82,11 @@ class MessageController extends Controller
         $ticket->save();
 
         ////mail notification
-        if($user->type == "agent" && $msgType != 'remark'){
-            $report_by = User::find($ticket->report_by);
-            $notify = new Notification($report_by,$request->ticket_id);
-            Mail::to($report_by)->send($notify);
-        }
+        // if($user->type == "agent" && $msgType != 'remark'){
+        //     $report_by = User::find($ticket->report_by);
+        //     $notify = new Notification($report_by,$request->ticket_id);
+        //     Mail::to($report_by)->send($notify);
+        // }
 
 
         return redirect()->back()->with('data', '#segment_'.$message->id);

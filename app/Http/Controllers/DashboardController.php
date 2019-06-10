@@ -9,6 +9,7 @@ use Auth;
 
 class DashboardController extends Controller
 {
+
 	public function __construct()
     {
         $this->middleware('auth');
@@ -18,7 +19,7 @@ class DashboardController extends Controller
     {   
         $user = Auth::user();
 
-        if($user->type == 'agent'){
+        if($user->type == 'doctor'){
 
             $assign = ticket::where("assign_to","=",$user->id)->count();
 
@@ -33,7 +34,7 @@ class DashboardController extends Controller
 
             return view('dashboard',compact('user','assign','attention','answer','open','created'));
 
-        }else if($user->type == 'customer'){
+        }else if($user->type == 'patient'){
 
             $report_by = ticket::where("report_by","=",$user->id)->count();
 
