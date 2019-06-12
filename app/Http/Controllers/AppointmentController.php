@@ -16,7 +16,6 @@ class AppointmentController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->duplicateCode = "resourcecode";
     }
 
     public function show(Request $request)

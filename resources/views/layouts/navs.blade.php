@@ -3,7 +3,7 @@
     <i class="angle up icon"></i>
 </a>
 <div class="ui fixed top menu sidemenu">
-    <a class="item"><i class="sidebar inverted icon" id="showSidebar"></i></a>
+    <a class="item" id="showSidebar"><i class="sidebar inverted icon"></i></a>
 </div>
 
 <div class="ui sidebar inverted vertical menu sidemenu">

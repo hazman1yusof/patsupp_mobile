@@ -7,7 +7,9 @@
 </div>
 
 <div class="ui sidebar inverted vertical menu sidemenu">
-    <a class="item {{(Request::is('appointment') ? 'active' : '')}}" href="\appointment"><i style="float: left" class="calendar alternate outline inverted icon big link"></i>Appointment</a>
+    <a class="item {{(Request::is('appointment') ? 'active' : '')}}" href="\appointment">
+        <i style="float: left" class="calendar alternate outline inverted icon big link"></i>
+    Appointment</a>
     <a class="item @if(Request::is('ticket') || Request::is('ticket/*')) {{'active'}} @endif" href="\ticket"><i class="comments inverted big link icon"></i>Question Posts</a>
     @if(Auth::check() && Auth::user()->type=='doctor')
         <a class="item {{(Request::is('patient') ? 'active' : '')}}" href="\patient"><i class="comments inverted big link icon"></i>Patient</a>

@@ -24,60 +24,32 @@ class TicketController extends Controller
      */
     public function index(Request $request)
     {
-        $customers = DB::table('users')->where('type','=','customer')->get();
-        $agents = DB::table('users')->where('type','=','agent')->get();
-        $user = Auth::user();
-
         $tickets = new ticket;
 
-        if(!empty($request->title)){
-            $tickets = $tickets->where('title','like','%'.$request->title.'%');
-        }
-        if(!empty($request->report_by)){
+        if(!empty($request->postby)){ //created by adalah username yang buat
             $tickets = $tickets->Where(function($query) use ($request){
-                foreach (explode(",", $request->report_by) as $key => $value) {
-                    $query = $query->orWhere('report_by','like',$value);
+                foreach (explode(",", $request->postby) as $key => $value) {
+                    $query = $query->orWhere('created_by','like','%'.$value.'%');
                 }
             });
         }
-        if(!empty($request->assign_to)){
-            $tickets = $tickets->Where(function($query) use ($request){
-                foreach (explode(",", $request->assign_to) as $key => $value) {
-                    $query = $query->orWhere('assign_to','like',$value);
+        if(!empty($request->question)){
+            $tickets = $tickets->orWhere(function($query) use ($request){
+                foreach (explode(",", $request->question) as $key => $value) {
+                    $query = $query->orWhere('description','like','%'.$value.'%');
                 }
             });
-        }
-        if(!empty($request->created_by)){
-            $tickets = $tickets->where('created_by','like','%'.$request->created_by.'%');
-        }
-        if(!empty($request->status)){
-            $tickets = $tickets->Where(function($query) use ($request){
-                foreach (explode(",", $request->status) as $key => $value) {
-                    $query = $query->orWhere('status','like',$value);
+
+            $tickets = $tickets->orWhere(function($query) use ($request){
+                foreach (explode(",", $request->question) as $key => $value) {
+                    $query = $query->orWhere('title','like','%'.$value.'%');
                 }
             });
-        }
-        if(!empty($request->priority)){
-            $tickets = $tickets->Where(function($query) use ($request){
-                foreach (explode(",", $request->priority) as $key => $value) {
-                    $query = $query->orWhere('priority','like',$value);
-                }
-            });
-        }
-        if(!empty($request->category)){
-            $tickets = $tickets->Where(function($query) use ($request){
-                foreach (explode(",", $request->category) as $key => $value) {
-                    $query = $query->orWhere('category','like',$value);
-                }
-            });
-        }
-        if(!empty($request->date_from) && !empty($request->date_to)){
-            $tickets = $tickets->whereBetween('created_at', [$request->date_from, $request->date_to]);
         }
 
-        if($user->type=='customer'){
-            $tickets = $tickets->where('report_by','=',$user->id);
-        }
+
+        // dump($tickets->toSql());
+        // dd($tickets->getBindings());
 
         $tickets = $tickets->orderBy('id', 'desc');
 
@@ -93,9 +65,8 @@ class TicketController extends Controller
 
         $tickets->appends(Input::except('page'))->links();
 
-        // dd($tickets);
 
-        return view('ticket',compact('tickets','customers','agents','navbar'));
+        return view('ticket',compact('tickets','navbar'));
     }
 
     /**

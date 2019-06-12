@@ -12,6 +12,11 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/Summernote 0.8.9/summernote-lite.css') }}">
 
         <style type="text/css">
+            .ui.vertical.menu .item>i.icon {
+                width: 1.18em !important;
+                float: left !important;
+                margin: 0 .5em 0 .5em !important;
+            }
             @yield('style')
         </style>
 

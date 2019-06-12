@@ -75,6 +75,8 @@ Route::get('/upload','PreviewController@upload');
 Route::post('/upload','PreviewController@form');
 Route::get('/upload/data','PreviewController@uploaddata');
 
+Route::get('/emergency','EmergencyController@index');
+
 
 Route::get('/download/{folder}/{image_path}','PreviewController@download');
 
@@ -94,5 +96,9 @@ Route::post('/appointment/delEvent','AppointmentController@delEvent');
 //webservice luar
 Route::get('/webservice/patmast','WebserviceController@patmast');
 Route::get('/webservice/episode','WebserviceController@episode');
+
+//util dr msoftweb
+Route::get('/util/get_value_default','defaultController@get_value_default');
+Route::get('/util/get_table_default','defaultController@get_table_default');
 
 

@@ -59,6 +59,9 @@
 				
 				<div class="extra content">
 					<span>
+						<i class="user orange circle icon"></i><span style="color: #f2711c!important;">{{$ticket->created_by}}</span>
+					</span>
+					<span style="float: right">
 						<i class="comment icon"></i>{{$ticket->messages()->count()}} Conversation
 					</span>
 				</div>
