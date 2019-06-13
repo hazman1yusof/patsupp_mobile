@@ -40,7 +40,7 @@ class PreviewController extends Controller
 
     public function uploaddata(Request $request)
     {
-        $table = DB::table('hisdb.episode')->where('mrn','=',$request->mrn)->where('mrn','=',$request->episno);
+        $table = DB::table('hisdb.episode')->where('mrn','=',$request->mrn)->where('episno','=',$request->episno);
 
         $responce = new stdClass();
         $responce->rows = $table->get();
