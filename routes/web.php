@@ -73,7 +73,6 @@ Route::get('/preview/data','PreviewController@previewdata');
 
 Route::get('/upload','PreviewController@upload');
 Route::post('/upload','PreviewController@form');
-Route::get('/upload/data','PreviewController@uploaddata');
 
 Route::get('/emergency','EmergencyController@index');
 

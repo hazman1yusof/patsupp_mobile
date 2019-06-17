@@ -56,9 +56,7 @@
 						<i class="dropdown icon"></i>
 						<div class="default text">Assign To</div>
 						<div class="menu">
-							@foreach ($agents as $agent)
-								<div class="item" data-value="{{$agent->id}}">{{$agent->username}}</div>
-							@endforeach
+							
 						</div>
 					</div>
 				</div>

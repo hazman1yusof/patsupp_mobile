@@ -40,10 +40,13 @@ class PreviewController extends Controller
 
     public function uploaddata(Request $request)
     {
-        $table = DB::table('hisdb.episode')->where('mrn','=',$request->mrn)->where('episno','=',$request->episno);
+        
+        $rows = $table->merge($user);
+
+
 
         $responce = new stdClass();
-        $responce->rows = $table->get();
+        $responce->rows = $rows;
         $responce->sql = $table->toSql();
         $responce->sql_bind = $table->getBindings();
 
@@ -53,9 +56,12 @@ class PreviewController extends Controller
 
     public function upload(Request $request)
     {   
-        $navbar = $this->navbar();
-        $user = DB::table('hisdb.pat_mast')->where('mrn','=',$request->mrn)->first();
-        return view('upload',compact('user','navbar'));
+        // $navbar = $this->navbar();
+        $episode = DB::table('hisdb.episode')->select('mrn','reg_date','reg_time')->where('mrn','=',$request->mrn)->where('episno','=',$request->episno)->first();
+        $patient = DB::table('hisdb.pat_mast')->select('Name','newic','DOB')->where('mrn','=',$request->mrn)->first();
+        $patresult = DB::table('hisdb.patresult')->where('mrn','=',$request->mrn)->get();
+
+        return view('upload',compact('patient','episode','patresult'));
     }
 
     
@@ -103,6 +109,8 @@ class PreviewController extends Controller
                 'type' => $type,
                 'trxdate' => $request->trxdate
             ]);
+
+        return redirect()->back();
     }
 
 }

@@ -5,38 +5,40 @@ $(document).ready(function () {
         return mom.format(returnformat);
     }
 
-    var DataTable_epis = $('#episodeList').DataTable({
+    var DataTable_preview = $('#tablePreview').DataTable({
     
         responsive: true,
-        scrollY: 500,
+        scrollY: 450,
         paging: false,
-        order: [[ 3, "desc" ]],
+        order: [[ 0, "desc" ]],
         columns: [
-            { data: 'episno', width: "10%"},
-            { data: 'epistycode', width: "20%"},
-            { data: 'reg_date', width: "20%"},
-            { data: 'mrn', width: "15%"},
-            { data: 'upload', width: "35%"}
-            
+            { data: 'auditno', width: "5%"},
+            { data: 'trxdate', width: "10%"},
+            { data: 'filename', width: "15%"},
+            { data: 'preview', width: "35%"},
+            { data: 'mrn' , width: "5%"},
+            { data: 'adduser', width: "10%"},
+            { data: 'adddate', width: "10%"},
+            { data: 'download', width: "10%"},
+            { data: 'type', visible: false},
         ],
         drawCallback: function( settings ) {
         },
         initComplete: function( settings, json ) {
         }
+
     });
 
-    episode_load_data();
+    preview_load_data();
 
-    function episode_load_data(){
-        DataTable_epis.clear().draw();
+    function preview_load_data(){
+        DataTable_preview.clear().draw();
         let mrn = $("#mrn").val();
-        let episno = $("#episno").val();
 
         var urlParam={
-            action:'upload value',
-            url:'upload/data',
-            mrn:parseInt(mrn),
-            episno:parseInt(episno)
+            action:'preview value',
+            url:'preview/data',
+            mrn:parseInt(mrn)
         }
 
         $.get( urlParam.url+"?"+$.param(urlParam), function( data ) {
@@ -44,98 +46,100 @@ $(document).ready(function () {
         },'json').done(function(data) {
             if(!$.isEmptyObject(data.rows)){
                 data.rows.forEach(function(obj,i){
-                    obj.episno = obj.episno; 
-                    obj.epistycode = obj.epistycode;
+                    obj.auditno = obj.auditno; 
+                    obj.trxdate = formatDate_mom(obj.trxdate,'YYYY-MM-DD HH:mm:ss');
+                    obj.filename = obj.resulttext;
+                    obj.preview = make_preview_image(i,obj.attachmentfile,obj.type);
                     obj.mrn = obj.mrn;
-                    obj.upload = make_upload_butt(i,obj.reg_date);
-                    obj.reg_date = formatDate_mom(obj.reg_date,'YYYY-MM-DD HH:mm:ss');
+                    obj.type = obj.type;
+                    obj.adduser = obj.adduser;
+                    obj.adddate = formatDate_mom(obj.adddate,'YYYY-MM-DD HH:mm:ss');
+                    obj.download = make_download_butt(i,obj.attachmentfile,obj.type,obj.resulttext);
                 });
 
-                DataTable_epis.rows.add(data.rows).draw();
-                DataTable_epis.columns.adjust().draw();
-                upload_but_on(mrn);
+                DataTable_preview.rows.add(data.rows).draw();
+                DataTable_preview.columns.adjust().draw();
             }
         });
     }
 
-    function make_upload_butt(i,trxdate){
-        return `
-            <form class="upload_form" method="post" data-index="`+i+`" id="upload_form_`+i+`" enctype="multipart/form-data">
-                <input type="file" name="file" accept="audio/*,image/*,video/*,application/pdf" capture style="display: none;" id="fileinput_`+i+`" data-index="`+i+`">
-                
-                <input type="hidden" value="`+trxdate+`" name='trxdate_`+i+`' id="trxdate_`+i+`" >
+    function make_preview_image(i,filepath,type){
+        let app_url = $('#app_url').val();
+        let filetype = type.split('/')[0];
+        let fileextension = type.split('/')[1];
+        let return_value='';
 
-                <button type="button" oper='click' class='ui icon button orange btn' data-index="`+i+`"><i class='cloud upload icon' ></i></button>
+        if(filetype=='image'){
+            return_value = `
+                <div class="imgcontainer">
+                    <img src="`+app_url+`thumbnail/`+filepath+`" >
+                      <a class="small circular orange ui icon button btn" target="_blank" href="`+app_url+`uploads/`+filepath+`">
+                          <i class='search icon' ></i>
+                      </a>
+                </div>`;
 
-                <button type="button" oper='cancel_`+i+`' class='ui icon small red button btn' style="margin-left:5px;display: none;" data-index="`+i+`" data-index="`+i+`"><i class='times icon'></i></button>
+        }else if(filetype=='application'){
+            switch(fileextension){
+                case 'pdf': return_value =  `
+                                    <div class="imgcontainer">
+                                        <img src="`+app_url+`thumbnail/application/pdf">
+                                          <a class="small circular orange ui icon button btn" target="_blank" href="`+app_url+`uploads/`+filepath+`" >
+                                              <i class='search icon' ></i>
+                                          </a>
+                                    </div>`; 
 
-                <button type="submit" oper='submit_`+i+`' class='ui icon small green button btn' style="display:none;" data-index="`+i+`" data-index="`+i+`"><i class='check icon'></i></button>
-                <label id="label_`+i+`"></label>
-            </form>
-        `;
+                            break;
+
+                default: return_value = app_url+'thumbnail/application/pdf';
+
+            }
+
+        }else if(filetype=='video'){
+            return_value = app_url+'thumbnail/video';
+
+        }else{
+            return_value = 'download';
+
+        }
+
+        return return_value;
+
     }
 
-    function upload_but_on(mrn){
-        let click = $("form.upload_form button[oper='click']");
+    function make_download_butt(i,filepath,type,filename){
+        let filetype = type.split('/')[0];
+        let fileextension = type.split('/')[1];
 
-        click.on("click",function(){
-            let i = $(this).data('index');
-            $("#fileinput_"+i).click();
-        });
-
-        $('form.upload_form input[type="file"]').on("change", function(){
-            let i = $(this).data('index');
-            let filename = $(this).val();
-
-            $("form.upload_form button[oper='cancel_"+i+"']").show();
-            $("form.upload_form button[oper='submit_"+i+"']").show();
-            $("form.upload_form #label_"+i).text(filename);
-
-            $("form.upload_form button[oper='cancel_"+i+"']").on("click", function(){
-                let i = $(this).data('index');
-
-                $("form.upload_form button[oper='cancel_"+i+"']").hide();
-                $("form.upload_form button[oper='submit_"+i+"']").hide();
-                $("form.upload_form #label_"+i).text("");
-                $("#upload_form_"+i).trigger('reset');
-
-            })
-        });
-
-        $("form.upload_form").on('submit',function(e){
-            let i = $(this).data('index');
-            e.preventDefault();
-            var formData = new FormData($(this));
-            formData.append('_token', $('#_token').val());
-            formData.append('mrn', mrn);
-            formData.append('trxdate', $('#trxdate_'+i).val());
-            formData.append('file',$("#fileinput_"+i).prop('files')[0]);
-
-            $.ajax({
-                url: "upload",
-                type: "POST",
-                data:  formData,
-                contentType: false,
-                cache: false,
-                processData:false,
-                success: function(data, textStatus, jqXHR) {
-                    alert('file saved!');
-                },
-                error: function(data, textStatus, jqXHR) {
-                    alert('error occurs!');
-                },
-            });
-
-            $("form.upload_form button[oper='cancel_"+i+"']").hide();
-            $("form.upload_form button[oper='submit_"+i+"']").hide();
-            $("form.upload_form #label_"+i).text("");
-            $("#upload_form_"+i).trigger('reset');
-        });
+        return `<a class='small circular orange basic ui icon button' href="/download/`+filepath+`?filename=`+filename+`" data-index="`+i+`"><i class="download icon"></i></a>`
+        
     }
+
+    $("#click").on("click",function(){
+        $("#file").click();
+    });
+
+    $('#file').on("change", function(){
+        let filename = $(this).val();
+
+        $("#cancel").show();
+        $("#submit").show();
+        $("#label").text(filename);
+    });
+
+    $("#cancel").on("click", function(){
+        $("#cancel").hide();
+        $("#submit").hide();
+
+        $("#label").text("");
+        $("#formdata").trigger('reset');
+    });
 
     $('#biodob').text(formatDate_mom($('#biodob').text(),'YYYY-MM-DD'));
 
+    $('#bio_reg_date').text(formatDate_mom($('#bio_reg_date').text(),'YYYY-MM-DD'));
+
     $("#bioage").html(getAge($('#biodob').text()));
+
     function getAge(dateString) {
         var today = new Date();
         var birthDate = new Date(dateString);

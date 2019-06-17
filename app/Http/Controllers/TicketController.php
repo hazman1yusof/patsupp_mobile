@@ -78,9 +78,9 @@ class TicketController extends Controller
     {   
         $navbar = $this->navbar();
 
-        $customers = DB::table('users')->where('type','=','customer')->get();
-        $agents = DB::table('users')->where('type','=','agent')->get();
-        return view('ticket_create',compact('agents','customers','navbar'));
+        // $patients = DB::table('sysdb.users')->where('groupid','=','patient')->get();
+        // $doctors = DB::table('users')->where('groupid','=','doctor')->get();
+        return view('ticket_create',compact('doctors','patients','navbar'));
     }
 
     /**
@@ -91,14 +91,14 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {   
-        $report_validate = (Auth::user()->type=='agent') ? 'required':'';
+        // $report_validate = (Auth::user()->groupid=='doctor') ? 'required':'';
 
         ////validate ticket
         $validatedData = $request->validate([
             'title' => 'required',
             'description' => 'required|min:5',
             'created_by' => 'required',
-            'report_by' => $report_validate
+            // 'report_by' => $report_validate
         ]);
 
         if(empty($request->category)){
@@ -123,7 +123,7 @@ class TicketController extends Controller
         $message->assign_to = $request->assign_to;
         $message->created_by = $request->created_by;
         $message->status = "Open";
-        $message->report_by = (Auth::user()->type=='customer') ? Auth::id() : $request->report_by;
+        // $message->report_by = (Auth::user()->groupid=='patient') ? Auth::id() : $request->report_by;
 
         $message->save();
 
@@ -138,9 +138,9 @@ class TicketController extends Controller
      */
     public function show(ticket $ticket)
     {
-        if(Auth::user()->type=='customer' && Auth::id() != $ticket->report_by){
-            return redirect()->back();
-        }
+        // if(Auth::user()->groupid=='patient' && Auth::user()->id != $ticket->report_by){
+        //     return redirect()->back();
+        // }
 
         $navbar = $this->navbar();
 
@@ -197,13 +197,13 @@ class TicketController extends Controller
     public function answer(User $user)
     {
 
-        $customers = DB::table('users')->where('type','=','customer')->get();
-        $agents = DB::table('users')->where('type','=','agent')->get();
+        // $patients = DB::table('users')->where('groupid','=','patient')->get();
+        // $doctors = DB::table('users')->where('groupid','=','doctor')->get();
 
         $navbar = $this->navbar();
         $answer = message::where("user_id","=",$user->id)->distinct('ticket_id')->pluck("ticket_id");
         $tickets = ticket::whereIn('id', $answer)->paginate();
 
-        return view('ticket',compact('tickets','customers','agents','navbar'));
+        return view('ticket',compact('tickets','patients','doctors','navbar'));
     }
 }

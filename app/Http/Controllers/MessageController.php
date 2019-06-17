@@ -55,7 +55,7 @@ class MessageController extends Controller
 
         ////check message type
         $user = Auth::user();
-        $msgType = $user->type;
+        $msgType = $user->groupid;
         if(!empty($request->remark)){
             $msgType = 'remark';
         }

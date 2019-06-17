@@ -17,6 +17,9 @@
                 float: left !important;
                 margin: 0 .5em 0 .5em !important;
             }
+            body{
+                height: auto !important;
+            }
             @yield('style')
         </style>
 
@@ -25,9 +28,11 @@
     </head>
     <body>
         @if(!Request::is('login'))
-            @include('layouts.navs')
+            @if(!Request::is('upload'))
+                @include('layouts.navs')
+            @endif
         @endif
-        <div class="pusher container" id="content">
+        <div class="pusher container_sem" id="content">
             @yield('content')
         </div>
     </body>  

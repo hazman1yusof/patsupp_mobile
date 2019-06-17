@@ -3,12 +3,38 @@
 
 @section('style')
 
+.imgcontainer {
+  position: relative;
+  width: fit-content;
+}
+
+.imgcontainer img {
+}
+
+.imgcontainer .btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #55554452;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.imgcontainer .btn:hover {
+  background-color: black;
+}
+
 #bio .col-md-1 {
-    width: 58px;
+  width: 58px;
 } 
 
 @endsection
-
 
 @section('content')
 
@@ -17,41 +43,70 @@
 <input type="hidden" name="episno" id="episno" value="{{Request::get('episno')}}">
 <input id="app_url" name="app_url" type="hidden" value="{{ env('APP_URL') }}">
 
-<div class='row' style="padding-top: 15px">
-	<div class="panel panel-default">
-	    <div class="panel-body">
-	    	
-	    	<div id="bio">
-			  <div class="row" style="margin: 0; padding: 0;">
-			  		<span class="col-md-1">Name: </span>
-			  		<span id="bioname">{{$user->Name}}</span>
-			  </div>
-			  <div class="row" style="margin: 0; padding: 0;">
-			  		<span class="col-md-1">IC: </span>
-			  		<span id="bioic">{{$user->Newic}} </span>
-			  </div>
-			  <div class="row" style="margin: 0; padding: 0;">
-			  		<span class="col-md-1">DOB: </span>
-			  		<span id="biodob">{{$user->DOB}}</span> (<span id="bioage"></span> years)
-			  </div>
-			</div>
+<div class="ui teal segment" style="padding-bottom: 30px;">
+	<h4 class="ui header">Upload an Image</h4>
+	<table class="ui celled table" id='episodeList'>
+		<thead>
+			<tr>
+				<th width="5%">MRN</th>
+				<th width="20%">Name</th>
+				<th>I/C</th>
+				<th>DOB</th>
+				<th>Register date</th>
+				<th>Register time</th>
+				<th width="25%">Upload</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{$episode->mrn}}</td>
+				<td>{{$patient->Name}}</td>
+				<td>{{$patient->newic}}</td>
+				<td><span id="biodob">{{$patient->DOB}}</span> (<span id="bioage"></span>)</td>
+				<td><span id="bio_reg_date">{{$episode->reg_date}}</span></td>
+				<td>{{$episode->reg_time}}</td>
+				<td>
+					<form class="upload_form" id="formdata" method="post" action="./upload" enctype="multipart/form-data">
+						{{csrf_field()}}
 
-			<table class="ui celled table" id='episodeList'>
-				<thead>
-					<tr>
-						<th>Episode No.</th>
-						<th>Episode Type</th>
-						<th>Register date</th>
-						<th>MRN</th>
-						<th>Upload</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
+        				<input type="hidden" name='trxdate' value="{{$episode->reg_date}}">
+        				<input type="hidden" name='mrn' value="{{$episode->mrn}}">
 
-		</div>
-	</div>
+						<input type="file" name="file" id="file" accept="audio/*,image/*,video/*,application/pdf" capture style="display: none;">
+
+						<button type="button" id='click' class='ui icon button orange btn' ><i class='cloud upload icon' ></i></button>
+
+						<button type="button" id="cancel" oper='cancel' class='ui icon small red button btn' style="margin-left:5px;display: none;"><i class='times icon'></i></button>
+						<button type="submit" id="submit" oper='submit' class='ui icon small green button btn' style="display:none;"><i class='check icon'></i></button>
+
+						<label id="label"></label>
+					</form>
+
+
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+
+<div class="ui teal segment" style="padding-bottom: 30px;">
+<h4 class="ui header">This user uploaded Images</h4>
+	<table class="ui celled table" id='tablePreview'>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Date</th>
+				<th>File Name</th>
+				<th>File Preview</th>
+				<th>MRN</th>
+				<th>Add User</th>
+				<th>Add Date</th>
+				<th>Download</th>
+				<th>type</th>
+			</tr>
+		</thead>
+	</table>
 </div>
 
 @endsection

@@ -10,7 +10,7 @@ $(document).ready(function () {
         responsive: true,
         scrollY: 450,
         paging: false,
-        order: [[ 1, "desc" ]],
+        order: [[ 0, "desc" ]],
         columns: [
             { data: 'auditno', width: "5%"},
             { data: 'trxdate', width: "10%"},

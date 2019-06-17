@@ -56,13 +56,17 @@ class SessionController extends Controller
 
     public function login(Request $request)
     {   
-        $remember = (!empty($request->remember)) ? true:false;
-        $user = User::where('username','=',$request->username);
+        // $remember = (!empty($request->remember)) ? true:false;
+        $remember = false;
+        // $user = User::where('username','=',$request->username);
+
+        $user = User::where('username',request('username'))
+                    ->where('password',request('password'));
 
         if($user->count() > 0){
-            if($user->first()->status == 'Inactive'){
-                return back()->withErrors(['Sorry, your account is inactive, contact admin to activate it again']);
-            }
+            // if($user->first()->status == 'Inactive'){
+            //     return back()->withErrors(['Sorry, your account is inactive, contact admin to activate it again']);
+            // }
 
             if ($request->password == $user->first()->password) {
                 Auth::login($user->first(),$remember);

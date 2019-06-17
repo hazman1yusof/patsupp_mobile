@@ -19,12 +19,12 @@ class WebserviceController extends Controller
         $field = ['compcode','mrn','episno','admsrccode','epistycode','case_code','ward','bedtype','room','bed','admdoctor','attndoctor','refdoctor','prescribedays','pay_type','pyrmode','climitauthid','crnumber','depositreq','deposit','pkgcode','billtype','remarks','episstatus','episactive','adddate','adduser','reg_date','reg_time','dischargedate','dischargeuser','dischargetime','dischargedest','allocdoc','allocbed','allocnok','allocpayer','allocicd','lastupdate','lastuser','lasttime','procode','dischargediag','lodgerno','regdept','diet1','diet2','diet3','diet4','diet5','glauthid','treatcode','diagcode','complain','diagfinal','clinicalnote','conversion','newcaseP','newcaseNP','followupP','followupNP','bed2','bed3','bed4','bed5','bed6','bed7','bed8','bed9','bed10','diagprov','visitcase','PkgAutoNo','AgreementID','AdminFees','EDDept'];
         echo $request['mrn'];
 
-        $exists = DB::table('hisdb.pat_mast')
+        $exists = DB::table('hisdb.episode')
                 ->where('mrn','=',$request['mrn'])
                 ->where('episno','=',$request['episno'])
                 ->exists();
 
-        if($exists){
+        if(!$exists){
             $array_insert = [];
             foreach($field as $key => $value){
                 $array_insert[$value] = $request[strtolower($value)];

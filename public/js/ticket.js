@@ -57,6 +57,7 @@ $(document).ready(function() {
 		    ['fontsize', ['fontsize']],
 		    ['color', ['color']],
 		    ['para', ['ul', 'ol', 'paragraph']],
+		    ['insert', ['link', 'picture', 'video']],
 		    ['height', ['height']],
 		    ['undo'],['redo'],['fullscreen']
 		  ]

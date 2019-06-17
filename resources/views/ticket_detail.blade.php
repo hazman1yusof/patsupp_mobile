@@ -9,10 +9,14 @@
 	<div class="ui secondary clearing segment">
 		<h3 class="ui header" style="margin-bottom: 10px"><span style="font-size: small;"></span> {{$ticket->title}}</h3>
 		<h5 class="ui header" style="margin-top: 0px">
+			<div class="ui left floated" >
+				<span class="sub header" style="color: #f2711c!important;">
+					<i class="user orange circle icon"></i>{{\DB::table('sysdb.users')->where('username','=',$ticket->created_by)->first()->username}}
+				</span>
+			</div>
 			<div class="ui right floated" >
 				<span class="sub header">{{Carbon\Carbon::parse($ticket->created_at)->toDayDateTimeString()}}</span>
 			</div>
-			
 		</h5>
 	</div>
 	<div class="ui clearing padded attached segment teal tertiary inverted" style="border-color: rgb(0, 181, 173);">
@@ -39,14 +43,14 @@
 
 @foreach($ticket->messages()->get() as $message)
 	<?php
-		$showsegment = ($message->message_type == 'remark' && Auth::user()->type == 'patient') ? false : true;
+		$showsegment = ($message->message_type == 'remark' && Auth::user()->groupid == 'patient') ? false : true;
 	?>
 	@if($showsegment)
 	<div class="ui segments" id="segment_{{$message->id}}">
 		<div class="ui secondary clearing segment">
 			<h5 class="ui header">
 				<?php  
-					$postedBy = DB::table('users')->find($message->user_id)->username;
+					$postedBy = DB::table('sysdb.users')->find($message->user_id)->username;
 				?>
 				<div class="avatar-circle left floated @if($message->message_type == 'patient'){{'user_color'}}@else{{'admin_color'}}@endif">
 					<span class="initials">{{strtoupper($postedBy[0])}}</span>

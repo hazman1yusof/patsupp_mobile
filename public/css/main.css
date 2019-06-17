@@ -10,7 +10,7 @@
 .sidemenu a.active {
     background: rgba(0,0,0, 0.5) !important;
 }
-.container {
+.container_sem {
     padding-right:15px; 
     padding-top:15px;
     padding-bottom:15px;
@@ -22,7 +22,7 @@
 .ui.left.fixed.vertical.icon.menu {
         display: none;
 }
-.container {
+.container_sem {
     padding-left: 15px;
     padding-top: 95px;
 }

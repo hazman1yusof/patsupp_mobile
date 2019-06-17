@@ -142,9 +142,9 @@ class AppointmentController extends Controller
             'case_code'   => $request->case,
             'remarks'     => $request->remarks,
             'recstatus'   => 'A',
-            'adduser'     => session('username'),
+            'adduser'     => 'system',
             'adddate'     => Carbon::now("Asia/Kuala_Lumpur"),
-            'lastuser'    => session('username'),
+            'lastuser'    => 'system',
             'lastupdate'  => Carbon::now("Asia/Kuala_Lumpur"),
             'type'        => 'DOC'
         ]);
@@ -189,7 +189,7 @@ class AppointmentController extends Controller
                 'telhp'       => $request->telhp,
                 'case_code'   => $request->case,
                 'remarks'     => $request->remarks,
-                'lastuser'    => session('username'),
+                'lastuser'    => 'system',
                 'lastupdate'  => Carbon::now("Asia/Kuala_Lumpur")
             ]);
 
@@ -202,7 +202,7 @@ class AppointmentController extends Controller
             ->where('idno','=',$request->idno)
             ->update([
                 'recstatus'   => 'D',
-                'deluser'     => session('username'),
+                'deluser'     => 'system',
                 'deldate'     => Carbon::now("Asia/Kuala_Lumpur")
             ]);
     }
@@ -213,8 +213,8 @@ class AppointmentController extends Controller
         $table = DB::table('hisdb.pat_mast');
 
         $array_insert = [
-            'compcode' => session('compcode'),
-            'adduser' => session('username'),
+            'compcode' => '9A',
+            'adduser' => 'system',
             'adddate' => Carbon::now("Asia/Kuala_Lumpur"),
             'recstatus' => 'A'
         ];
@@ -272,8 +272,8 @@ class AppointmentController extends Controller
         $table = DB::table('hisdb.pat_mast');
 
         $array_update = [
-            'compcode' => session('compcode'),
-            'upduser' => session('username'),
+            'compcode' => '9A',
+            'upduser' => 'system',
             'upddate' => Carbon::now("Asia/Kuala_Lumpur"),
             'recstatus' => 'A'
         ];
