@@ -79,28 +79,48 @@ class WebserviceController extends Controller
 
     public function ticket(Request $request)
     {   
-        // $remember = (!empty($request->remember)) ? true:false;
         $remember = false;
-        // $user = User::where('username','=',$request->username);
 
-        $user = User::where('username',request('username'))
-                    ->where('password',request('password'));
+        $user = User::where('username',request('username'));
 
         if($user->count() > 0){
-            // if($user->first()->status == 'Inactive'){
-            //     return back()->withErrors(['Sorry, your account is inactive, contact admin to activate it again']);
-            // }
-
             if ($request->password == $user->first()->password) {
                 Auth::login($user->first(),$remember);
                 return redirect('/ticket');
             }else{
-                return abort(404);
+                $this->edit_user_pw($request);
+                return redirect('/ticket');
             }
         }else{
-            return abort(404);
+            $this->create_user($request);
+            return redirect('/ticket');
         }
     }
 
+    public function create_user(Request $request){
+        $user = new User;
+
+        $user->compcode = '9A';
+        $user->username = $request->username;
+        $user->groupid = 'doctor';
+        $user->password = $request->password;
+        $user->remember_token = str_random(10);
+
+        $user->save();
+
+        Auth::login($user->first(),false);
+
+    }
+
+    public function edit_user_pw(Request $request){
+        DB::table('sysdb.users')
+            ->where('username',$request->username)
+            ->update(['password' => $request->password]);
+
+        $user = User::where('username',request('username'));
+
+        Auth::login($user->first(),false);
+
+    }
     
 }
