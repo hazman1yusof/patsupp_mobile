@@ -95,6 +95,7 @@ Route::post('/appointment/delEvent','AppointmentController@delEvent');
 //webservice luar
 Route::get('/webservice/patmast','WebserviceController@patmast');
 Route::get('/webservice/episode','WebserviceController@episode');
+Route::get('/webservice/ticket','WebserviceController@ticket');
 
 //util dr msoftweb
 Route::get('/util/get_value_default','defaultController@get_value_default');

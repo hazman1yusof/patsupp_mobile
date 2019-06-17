@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use stdClass;
 use App\User;
 use DB;
+use Auth;
+use Hash;
+use Session;
 
 class WebserviceController extends Controller
 {
@@ -73,5 +76,31 @@ class WebserviceController extends Controller
                 ->update($array_insert);
         }
     }
+
+    public function ticket(Request $request)
+    {   
+        // $remember = (!empty($request->remember)) ? true:false;
+        $remember = false;
+        // $user = User::where('username','=',$request->username);
+
+        $user = User::where('username',request('username'))
+                    ->where('password',request('password'));
+
+        if($user->count() > 0){
+            // if($user->first()->status == 'Inactive'){
+            //     return back()->withErrors(['Sorry, your account is inactive, contact admin to activate it again']);
+            // }
+
+            if ($request->password == $user->first()->password) {
+                Auth::login($user->first(),$remember);
+                return redirect('/ticket');
+            }else{
+                return abort(404);
+            }
+        }else{
+            return abort(404);
+        }
+    }
+
     
 }
