@@ -21,7 +21,11 @@ class PreviewController extends Controller
     public function preview(Request $request)
     {   
         $navbar = $this->navbar();
-        $user = DB::table('hisdb.pat_mast')->where('mrn','=',$request->mrn)->first();
+        if(!empty($request->mrn)){
+            $user = DB::table('hisdb.pat_mast')->where('mrn','=',$request->mrn)->first();
+        }else{
+            $user = DB::table('hisdb.pat_mast')->where('loginid','=',Auth::user()->username)->first();
+        }
         // $previews = DB::table('hisdb.patresult')->where('mrn','=',$request->mrn)->get();
         return view('preview',compact('user','navbar'));
     }
