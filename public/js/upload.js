@@ -123,14 +123,14 @@ $(document).ready(function () {
 
         $("#cancel").show();
         $("#submit").show();
-        $("#label").text(filename);
+        $("#rename").show();
     });
 
     $("#cancel").on("click", function(){
         $("#cancel").hide();
         $("#submit").hide();
-
-        $("#label").text("");
+        $("#rename").hide();
+        
         $("#formdata").trigger('reset');
     });
 

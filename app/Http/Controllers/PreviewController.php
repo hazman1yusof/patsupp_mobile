@@ -100,7 +100,11 @@ class PreviewController extends Controller
     public function form(Request $request)
     {   
         $type = $request->file('file')->getClientMimeType();
-        $filename = $request->file('file')->getClientOriginalName();
+        if(!empty($request->rename)){
+            $filename = $request->rename;
+        }else{
+            $filename = $request->file('file')->getClientOriginalName();
+        }
         $file_path = $request->file('file')->store('pat_enq', 'public_uploads');
         DB::table('hisdb.patresult')
             ->insert([
