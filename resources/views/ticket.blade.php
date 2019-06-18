@@ -4,7 +4,7 @@
 @include('layouts.ticketFilter')	
 
 	<input type="hidden" id="scroll_btm" value="">
-	<a class="positive ui button" href="/ticket/create">Ask a Question</a>
+	<a class="positive ui button" href="./ticket/create">Ask a Question</a>
 
 	<h4 class="ui horizontal divider header">Question List</h4>
 	<div class="ui three link stackable cards">

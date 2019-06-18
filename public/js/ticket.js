@@ -69,7 +69,7 @@ $(document).ready(function() {
 	});
 
 	$('.card').click(function(){
-		location.assign("/ticket/"+$(this).data('id'));
+		location.assign("./ticket/"+$(this).data('id'));
 	});
 
 	$('#submitMessage').dropdown({

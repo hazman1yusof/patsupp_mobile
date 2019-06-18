@@ -21,7 +21,7 @@
 	</div>
 	<div class="ui clearing padded attached segment teal tertiary inverted" style="border-color: rgb(0, 181, 173);">
 
-		<form method="POST" class="ui form" id="messageForm" action="/ticket/{{$ticket->id}}">
+		<form method="POST" class="ui form" id="messageForm" action="./ticket/{{$ticket->id}}">
 			{{csrf_field()}}
 
     		<input type="hidden" name="_method" value="PUT">
@@ -72,7 +72,7 @@
 		</div>
 		<div class="ui clearing @if($message->message_type == 'patient'){{'teal'}}@elseif($message->message_type == 'doctor'){{'orange'}}@else{{'yellow tertiary inverted'}}@endif padded segment" style="color: black !important">
 
-			<form method="POST" class="ui form" id="messageForm" action="/message/{{$message->id}}">
+			<form method="POST" class="ui form" id="messageForm" action="../message/{{$message->id}}">
 				{{csrf_field()}}
     			<input type="hidden" name="_method" value="PUT">
     			<input type="hidden" name="text" id="message_{{$message->id}}_text">
@@ -89,7 +89,7 @@
 
 @endforeach
 
-	<form method="POST" class="ui form" id="messageForm" action="/message" id="submit_form">
+	<form method="POST" class="ui form" id="messageForm" action="../message" id="submit_form">
 		{{csrf_field()}}
         <div class="ui error message"></div>
 		<input type="hidden" name="status" value="normal">

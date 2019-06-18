@@ -11,13 +11,13 @@
         {!!$item->condition2!!}
     @endforeach -->
     @if (Auth::user()->groupid == 'patient')
-    	<a class="item {{(Request::is('appointment') ? 'active' : '')}}" href="\appointment"><i style="float: left" class="calendar alternate outline inverted icon big link"></i>Appointment</a>
-    	<a class="item @if(Request::is('ticket') || Request::is('ticket/*')) {{'active'}} @endif" href="\ticket"><i style="float: left" class="comments inverted big link icon"></i>Chat</a>
-    	<a class="item {{(Request::is('preview') ? 'active' : '')}}" href="\preview"><i style="float: left" class="folder open inverted big icon link"></i>Medical Images</a>
+    	<a class="item {{(Request::is('appointment') ? 'active' : '')}}" href="{{ env('APP_URL') }}appointment"><i style="float: left" class="calendar alternate outline inverted icon big link"></i>Appointment</a>
+    	<a class="item @if(Request::is('ticket') || Request::is('ticket/*')) {{'active'}} @endif" href="{{ env('APP_URL') }}ticket"><i style="float: left" class="comments inverted big link icon"></i>Chat</a>
+    	<a class="item {{(Request::is('preview') ? 'active' : '')}}" href="{{ env('APP_URL') }}preview"><i style="float: left" class="folder open inverted big icon link"></i>Medical Images</a>
     @else
-    	<a class="item {{(Request::is('appointment') ? 'active' : '')}}" href="\appointment"><i style="float: left" class="calendar alternate outline inverted icon big link"></i>Appointment</a>
-    	<a class="item @if(Request::is('ticket') || Request::is('ticket/*')) {{'active'}} @endif" href="\ticket"><i style="float: left" class="comments inverted big link icon"></i>Chat</a>
-    	<a class="item {{(Request::is('preview') ? 'active' : '')}}" href="\emergency"><i style="float: left" class="folder open inverted big icon link"></i>Medical Images</a>
+    	<a class="item {{(Request::is('appointment') ? 'active' : '')}}" href="{{ env('APP_URL') }}appointment"><i style="float: left" class="calendar alternate outline inverted icon big link"></i>Appointment</a>
+        <a class="item {{(Request::is('preview') ? 'active' : '')}}" href="{{ env('APP_URL') }}emergency"><i style="float: left" class="folder open inverted big icon link"></i>Document Upload</a>
+    	<a class="item @if(Request::is('ticket') || Request::is('ticket/*')) {{'active'}} @endif" href="{{ env('APP_URL') }}ticket"><i style="float: left" class="comments inverted big link icon"></i>Chat</a>
     @endif
-    <a class="item" href="\logout"><i style="float: left" class="plug inverted big icon link"></i>Log Out</a>
+    <a class="item" href=".\logout"><i style="float: left" class="plug inverted big icon link"></i>Log Out</a>
 </div>

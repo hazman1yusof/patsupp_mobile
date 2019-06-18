@@ -107,10 +107,11 @@ $(document).ready(function () {
     }
 
     function make_download_butt(i,filepath,type,filename){
+        let app_url = $('#app_url').val();
         let filetype = type.split('/')[0];
         let fileextension = type.split('/')[1];
 
-        return `<a class='small circular orange basic ui icon button' href="/download/`+filepath+`?filename=`+filename+`" data-index="`+i+`"><i class="download icon"></i></a>`
+        return `<a class='small circular orange basic ui icon button' href="`+app_url+`/download/`+filepath+`?filename=`+filename+`" data-index="`+i+`"><i class="download icon"></i></a>`
         
     }   
 
