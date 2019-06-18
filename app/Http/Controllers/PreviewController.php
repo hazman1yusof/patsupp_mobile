@@ -79,11 +79,11 @@ class PreviewController extends Controller
             }
         }else if($folder == 'video'){
             switch($image_path){
-                case 'pdf': $img = Image::make('uploads/pat_enq/video-icon.png')->resize(96, 96); break;
+                case 'video': $img = Image::make('uploads/pat_enq/video-icon.png')->resize(96, 96); break;
             }
         }else if($folder == 'audio'){
             switch($image_path){
-                case 'pdf': $img = Image::make('uploads/pat_enq/audio-icon.png')->resize(96, 96); break;
+                case 'audio': $img = Image::make('uploads/pat_enq/audio-icon.png')->resize(96, 96); break;
             }
         }
 

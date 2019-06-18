@@ -1,6 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
+/public/storage
+/public/uploads/pat_enq
 /storage/*.key
 /vendor
 /.idea

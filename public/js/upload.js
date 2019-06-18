@@ -95,7 +95,7 @@ $(document).ready(function () {
             }
 
         }else if(filetype=='video'){
-            return_value = app_url+'thumbnail/video';
+            return_value = app_url+'thumbnail/video/video';
 
         }else{
             return_value = 'download';
@@ -130,7 +130,7 @@ $(document).ready(function () {
         $("#cancel").hide();
         $("#submit").hide();
         $("#rename").hide();
-        
+
         $("#formdata").trigger('reset');
     });
 
