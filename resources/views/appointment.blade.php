@@ -87,7 +87,7 @@ td.fc-event-container a.selected{
 							<div class="col-md-4">
 								<div class="input-group">
 									<input type="text" class="form-control input-sm" placeholder="MRN No" id="mrn" name="mrn" maxlength="12" readonly value="@if(!empty($pat_info)){{$pat_info->MRN}} @endif">
-									<a class="input-group-addon btn btn-primary"><span class='fa fa-ellipsis-h'></span></a>
+									<a class="input-group-addon btn btn-primary"><span class='glyphicon glyphicon-option-horizontal'></span></a>
 								</div>
 								<span class='help-block'></span>
 							</div>

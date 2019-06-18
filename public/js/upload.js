@@ -141,6 +141,7 @@ $(document).ready(function () {
     $("#bioage").html(getAge($('#biodob').text()));
 
     function getAge(dateString) {
+        console.log(dateString);
         var today = new Date();
         var birthDate = new Date(dateString);
         var age = today.getFullYear() - birthDate.getFullYear();

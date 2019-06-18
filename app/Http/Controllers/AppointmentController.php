@@ -33,19 +33,14 @@ class AppointmentController extends Controller
                     ->where('source','=','HIS')
                     ->where('trantype','=','ALCOLOR')
                     ->first();
-
-
-        $pat_info = DB::table('hisdb.pat_mast')
-                    ->where('mrn','=','1')
-                    ->first();
         
-        // if(Auth::user()->groupid == "patient"){
-        //     $pat_info = DB::table('hisdb.pat_mast')
-        //             ->where('loginid','=',Auth::user()->username)
-        //             ->first();
-                    
-        //     return view('hisdb.apptrsc.apptrsc',compact('ALCOLOR','pat_info'));
-        // }
+        if(Auth::user()->groupid == "patient"){
+            $pat_info = DB::table('hisdb.pat_mast')
+                    ->where('mrn','=',Auth::user()->mrn)
+                    ->first();
+        }else{
+            $pat_info=null;
+        }
 
         return view('appointment',compact('ALCOLOR','pat_info','resources','navbar'));
     }
