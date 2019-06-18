@@ -95,7 +95,14 @@ $(document).ready(function () {
             }
 
         }else if(filetype=='video'){
-            return_value = app_url+'thumbnail/video/video';
+            return_value =  `
+                            <div class="imgcontainer">
+                                <img src="`+app_url+`thumbnail/video/video">
+                                  <a class="small circular orange ui icon button btn" target="_blank" href="`+app_url+`uploads/`+filepath+`" >
+                                      <i class='search icon' ></i>
+                                  </a>
+                            </div>`; 
+                                    
 
         }else{
             return_value = 'download';
